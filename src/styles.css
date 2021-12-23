@@ -108,6 +108,18 @@ img {
   cursor: pointer;
 }
 
+.loader {
+  position: absolute;
+  z-index: 100;
+  transform: scale(0.15);
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: fit-content;
+}
+
 /* ---- navbar ------- */
 
 .navbar {
@@ -280,6 +292,31 @@ img {
   padding: 2px 10px;
   text-transform: uppercase;
   text-align: center;
+}
+
+.details .filetype {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.details .uplabel {
+  position: absolute;
+  color: #fff;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.details .banner:hover .uplabel {
+  z-index: 3;
 }
 
 @media only screen and (max-width: 992px) {

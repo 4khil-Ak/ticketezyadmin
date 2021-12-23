@@ -15,8 +15,9 @@ const Navbar = () => {
         type="button"
         data-toggle="collapse"
         data-target="#collapsibleNavbar"
+        style={{ outline: "0" }}
       >
-        <span class="navbar-toggler-icon"></span>
+        <span class="fa fa-bars text-light"></span>
       </button>
 
       {/* <!-- Navbar links --> */}
@@ -27,7 +28,7 @@ const Navbar = () => {
               Movies
             </Link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none d-md-block">
             <span class="nav-link px-0">/</span>
           </li>
           <li class="nav-item">
@@ -35,7 +36,7 @@ const Navbar = () => {
               Theater
             </Link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none d-md-block">
             <span class="nav-link px-0">/</span>
           </li>
           <li class="nav-item">
@@ -43,7 +44,7 @@ const Navbar = () => {
               Events
             </Link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none d-md-block">
             <span class="nav-link px-0">/</span>
           </li>
           <li class="nav-item">
@@ -51,7 +52,7 @@ const Navbar = () => {
               Events Manager
             </Link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item d-none d-md-block">
             <span class="nav-link px-0">/</span>
           </li>
           <li class="nav-item">

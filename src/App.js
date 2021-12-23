@@ -5,12 +5,14 @@ import Admin from "./Pages/Admin";
 import Events from "./Pages/Events";
 import EventsManager from "./Pages/EventsManager";
 import AddEvent from "./Pages/AddEvent";
+import AddManager from "./Pages/AddManager";
 
 export default function App() {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Admin />}>
+          <Route path="addmanager" element={<AddManager />}></Route>
           <Route path="eventsmanager" element={<EventsManager />}></Route>
           <Route path="addevent" element={<AddEvent />}></Route>
           <Route path="events" element={<Events />}></Route>

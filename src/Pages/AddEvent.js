@@ -13,6 +13,26 @@ const AddEvent = () => {
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   };
+  let Image = "";
+  if (image !== null) {
+    Image = (
+      <>
+        {" "}
+        <img
+          src={image}
+          className="position-relative"
+          alt="preview"
+          style={{ zIndex: "2" }}
+        />
+      </>
+    );
+  } else {
+    Image = (
+      <>
+        <small>Upload a imgae to continue</small>
+      </>
+    );
+  }
   return (
     <>
       <div className="details p-3" style={{ background: "#fff" }}>
@@ -31,17 +51,21 @@ const AddEvent = () => {
                   Add Event Banner Image and Gallery Images
                 </p>
               </div>
-              <div className="col-6 row p-0" style={{ maxWidth: "100%" }}>
+              <div className="col-6 row p-2" style={{ maxWidth: "100%" }}>
                 <div
-                  className="position-relative"
+                  className="position-relative w-100 banner"
                   style={{ height: "300px", overflow: "hidden" }}
                 >
                   <input
                     type="file"
                     onChange={onImageChange}
                     className="filetype"
+                    id="uploadimg"
                   />
-                  <img src={image} alt="preview" />
+                  <label className="uplabel" htmlFor="uploadimg">
+                    <i className="fa fa-upload fa-3x"></i>
+                  </label>
+                  {Image}
                 </div>
               </div>
               <div className="col-5 row p-0" style={{ maxWidth: "100%" }}></div>

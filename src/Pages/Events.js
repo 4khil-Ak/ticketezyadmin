@@ -33,7 +33,7 @@ const Events = () => {
             <input type="date" placeholder="pick" id="date" />
           </div>
         </div>
-        <div className="grid-viewisection row">
+        <div className="grid-view-section row">
           <DetailsCard editModal={onChangeHandler} />
           <DetailsCard editModal={onChangeHandler} />
           <DetailsCard editModal={onChangeHandler} />
