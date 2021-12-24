@@ -8,9 +8,11 @@ import Events from "./Pages/Events";
 import EventsManager from "./Pages/EventsManager";
 import AddEvent from "./Pages/AddEvent";
 import AddManager from "./Pages/AddManager";
+import AddPriceCard from "./Pages/AddPriceCard";
+import AddEventSchedule from "./Pages/AddEventSchedule";
 
 export default function App() {
-  // const url = "/super_admins/login";
+  const url = "/super_admins/login";
   let navigate = useNavigate();
   const [isLoggedIn, setisLoggedIn] = useState(true);
   const [error, setError] = useState(false);
@@ -36,23 +38,22 @@ export default function App() {
     } else if (adminDetails.password !== loginCredential.password) {
       setError("Invalid Password");
     } else {
-      // Axios.post(
-      //   url,
-      //   {
-      //     user_name: adminDetails.email,
-      //     password: adminDetails.password
-      //   },
-      //   {
-      //     headers: {
-      //       Accept: "application/json",
-      //       "Content-Type": "application/json"
-      //     }
-      //   }
-      // ).then((res) => {
-      //   console.log("success");
-      // });
-      setisLoggedIn(true);
-      navigate("/");
+      Axios.post(
+        url,
+        {
+          user_name: adminDetails.email,
+          password: adminDetails.password
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          }
+        }
+      ).then((res) => {
+        setisLoggedIn(true);
+        navigate("/");
+      });
     }
   };
   const handleLogout = (e) => {
@@ -76,6 +77,8 @@ export default function App() {
         >
           <Route path="addmanager" element={<AddManager />}></Route>
           <Route path="eventsmanager" element={<EventsManager />}></Route>
+          <Route path="addeventschedule" element={<AddEventSchedule />}></Route>
+          <Route path="addpricecard" element={<AddPriceCard />}></Route>
           <Route path="addevent" element={<AddEvent />}></Route>
           <Route index path="events" element={<Events />}></Route>
         </Route>
