@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Manager from "../Resusable/Manager";
+import ManagerEditModal from "../Resusable/ManagerEditModal";
 
 const EventsManager = () => {
+  const [editModal, setEditModal] = useState(false);
   let navigate = useNavigate();
+
+  const onChangeHandler = () => {
+    setEditModal((prevState) => {
+      return !prevState;
+    });
+  };
   const addNew = () => {
     navigate("/addmanager");
   };
@@ -18,9 +26,10 @@ const EventsManager = () => {
           <div className="header-options active">Blocked</div>
         </div>
         <div className="grid-view-section row">
-          <Manager />
+          <Manager editModal={onChangeHandler} />
         </div>
       </div>
+      {editModal && <ManagerEditModal editModal={onChangeHandler} />}
     </>
   );
 };

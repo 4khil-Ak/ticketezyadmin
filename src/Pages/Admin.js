@@ -2,11 +2,11 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../Component/Navbar/Navbar";
 
-const Admin = () => {
+const Admin = (props) => {
   return (
     <>
-      <Navbar />
-      <Outlet/>
+      <Navbar handleLogout={props.handleLogout} />
+      <Outlet />
     </>
   );
 };

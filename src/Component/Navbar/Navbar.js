@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
   return (
     <nav class="navbar navbar-expand-md">
       {/* <!-- Brand --> */}
@@ -56,9 +56,9 @@ const Navbar = () => {
             <span class="nav-link px-0">/</span>
           </li>
           <li class="nav-item">
-            <Link class="nav-link" to={`/login`}>
+            <span class="nav-link cursor-pointer" onClick={props.handleLogout}>
               Logout&ensp;<i class="fa fa-sign-out"></i>
-            </Link>
+            </span>
           </li>
         </ul>
       </div>

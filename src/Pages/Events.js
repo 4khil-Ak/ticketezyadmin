@@ -5,10 +5,10 @@ import EditModal from "../Resusable/EditModal";
 
 const Events = () => {
   let navigate = useNavigate();
-  const [detailsModal, setDetailsModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
   const onChangeHandler = () => {
-    setDetailsModal((prevState) => {
+    setEditModal((prevState) => {
       return !prevState;
     });
   };
@@ -43,7 +43,7 @@ const Events = () => {
           <DetailsCard editModal={onChangeHandler} />
         </div>
       </div>
-      {detailsModal && <EditModal editModal={onChangeHandler} />}
+      {editModal && <EditModal editModal={onChangeHandler} />}
     </>
   );
 };
