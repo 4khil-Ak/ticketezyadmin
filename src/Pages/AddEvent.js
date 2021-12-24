@@ -17,7 +17,6 @@ const AddEvent = () => {
   if (image !== null) {
     Image = (
       <>
-        {" "}
         <img
           src={image}
           className="position-relative"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import Axios from "axios";
 import "./styles.css";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import PrivateRoute from "./Component/PrivateRoute";
 import Login from "./Pages/Login";
 import Admin from "./Pages/Admin";
 import Events from "./Pages/Events";
@@ -10,15 +10,15 @@ import AddEvent from "./Pages/AddEvent";
 import AddManager from "./Pages/AddManager";
 
 export default function App() {
+  // const url = "/super_admins/login";
   let navigate = useNavigate();
-  const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [isLoggedIn, setisLoggedIn] = useState(true);
   const [error, setError] = useState(false);
   const [loginCredential] = useState({
     user_name: "!@#TICKETEZY!@#",
     password: "Ticketezy@123"
   });
   const [adminDetails, setAdminDetails] = useState();
-  console.log(adminDetails);
   const onChangeHandler = (event) => {
     let val = event.target.value;
     setAdminDetails((prevState) => {
@@ -27,7 +27,6 @@ export default function App() {
         [event.target.id]: val
       };
     });
-    console.log(adminDetails, "onchange");
   };
 
   const handleLogin = (e) => {
@@ -37,9 +36,23 @@ export default function App() {
     } else if (adminDetails.password !== loginCredential.password) {
       setError("Invalid Password");
     } else {
+      // Axios.post(
+      //   url,
+      //   {
+      //     user_name: adminDetails.email,
+      //     password: adminDetails.password
+      //   },
+      //   {
+      //     headers: {
+      //       Accept: "application/json",
+      //       "Content-Type": "application/json"
+      //     }
+      //   }
+      // ).then((res) => {
+      //   console.log("success");
+      // });
       setisLoggedIn(true);
       navigate("/");
-      console.log("success");
     }
   };
   const handleLogout = (e) => {
@@ -73,7 +86,7 @@ export default function App() {
             <Login
               handleLogin={handleLogin}
               onChangeHandler={onChangeHandler}
-              adminDetails={adminDetails}
+              // loginCredential={loginCredential}
               error={error}
             />
           }
