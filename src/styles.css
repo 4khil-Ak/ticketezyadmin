@@ -221,6 +221,7 @@ img {
   cursor: pointer;
 }
 
+.filter-section-header .header-options.active,
 .filter-section-header .header-options:hover {
   color: #fff;
   background-color: var(--primary);

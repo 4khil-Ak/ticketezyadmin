@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+import Loader from "../UI/Loader";
 
 const AddManager = () => {
   const url = "https://apidev.ticketezy.com/event_managers";
+  const [loading, setLoading] = useState(false)
   const [managerDetails, setManagerDetails] = useState({
     name: "",
     companyname: "",
@@ -63,6 +65,7 @@ const AddManager = () => {
     } else if (managerDetails.aadhar.length !== 12) {
       setError("Enter valid aadhar number !");
     } else {
+      setLoading(true);
       Axios.post(
         url,
         {
@@ -86,6 +89,7 @@ const AddManager = () => {
           }
         }
       ).then((res) => {
+        setLoading(false);
         navigate("/eventsmanager");
       });
     }
@@ -224,6 +228,7 @@ const AddManager = () => {
           </button>
         </div>
       </div>
+      {loading && <Loader />}
     </>
   );
 };

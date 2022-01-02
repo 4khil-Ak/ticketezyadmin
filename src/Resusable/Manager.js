@@ -1,15 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import SwitchComponent from "../UI/Switch";
+import Axios from "axios";
 
 const Manager = (props) => {
+  const url = "https://apidev.ticketezy.com/event_managers/";
+  const [checked, setChecked] = useState(true);
+  const handleChange = () => {
+    setChecked((prevState) => {
+      return !prevState;
+    });
+  };
+  useEffect(() => {
+    // Axios.patch()
+    if (props.manager.status === "active") {
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }, [])
   return (
     <>
-      <div className="col-sm-6 col-md-3 px-3 py-2">
+      <div className="col-sm-6 col-md-3 px-3 py-2" key={props.manager.secret}>
         <div className="card box-shadow p-2">
-          {/* <img src="/images/events.png" className="card-img" alt="section" /> */}
           <div className="pb-2">
-            <p className="name f-600">Manager Name</p>
-            <p className="company">Company Name</p>
-            <p className="number">1234567890</p>
+            <SwitchComponent checked={checked} handleChange={handleChange} />
+            <p className="name f-600">{props.manager.name}</p>
+            <p className="company">{props.manager.company_name}</p>
+            <p className="number">{props.manager.mobile}</p>
             <p className="eventno">
               Number of events <span className="f-600">:&ensp;3</span>
             </p>
