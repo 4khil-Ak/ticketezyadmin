@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Alert } from "react-bootstrap";
 
 const Login = (props) => {
@@ -17,6 +17,7 @@ const Login = (props) => {
               placeholder="email"
               // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               onChange={props.onChangeHandler}
+              // value={props.loginCredential.user_name}
               required
             />
             <input
@@ -24,6 +25,7 @@ const Login = (props) => {
               id="password"
               placeholder="password"
               onChange={props.onChangeHandler}
+              // value={props.loginCredential.password}
               required
             />
             {props.error && <Alert variant="danger">{props.error}</Alert>}

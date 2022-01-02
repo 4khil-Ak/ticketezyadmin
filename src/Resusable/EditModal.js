@@ -6,7 +6,12 @@ import { AdultOptions } from "../Helpers/AdultOptions";
 import { EventsManager } from "../Helpers/EventsManager";
 
 const EditModal = (props) => {
-  // const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [image, setImage] = useState(null);
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setImage(URL.createObjectURL(event.target.files[0]));
+    }
+  };
 
   return (
     <>
@@ -29,10 +34,24 @@ const EditModal = (props) => {
             </div>
           </div>
           <div
-            className="banner-image w-100"
+            className="position-relative banner-image w-100"
             style={{ height: "250px", overflow: "hidden" }}
           >
-            <img className="w-100" src="/images/events.png" alt="banner" />
+            <input
+              type="file"
+              onChange={onImageChange}
+              className="filetype"
+              id="uploadimg"
+            />
+            <label className="uplabel" htmlFor="uploadimg">
+              <i className="fa fa-upload fa-3x"></i>
+            </label>
+            <img
+              src={image}
+              className="position-relative"
+              alt="preview"
+              style={{ zIndex: "2" }}
+            />
           </div>
           <div className="row">
             <div className="col-md-6 p-2">
@@ -107,6 +126,34 @@ const EditModal = (props) => {
                 <Select options={AdultOptions} id="adult" />
               </div>
             </div>
+          </div>
+          <div className="row">
+            <label className="w-100 mb-2">Event Speakers</label>
+            <div className="row">
+              <div className="col-sm-2 p-1">
+                <input className="w-100 px-2" type="text" value="Akhil" />
+              </div>
+              <div className="col-sm-2 p-1">
+                <input className="w-100 px-2" type="text" value="Arun" />
+              </div>
+              <div className="col-sm-2 p-1">
+                <input className="w-100 px-2" type="text" value="Sujith" />
+              </div>
+              <div className="col-sm-2 p-1">
+                <input className="w-100 px-2" type="text" value="Sujith" />
+              </div>
+              <div className="col-sm-2 p-1">
+                <input className="w-100 px-2" type="text" value="Sujith" />
+              </div>
+            </div>
+          </div>
+          <div className="row justify-content-end pt-3">
+            <button className="btn btn-primary mr-2" type="submit">
+              Save
+            </button>
+            <button className="btn btn-primary" type="submit">
+              Cancel
+            </button>
           </div>
           <div className="w-100 p-2">
             <label className="mb-2">Price Card & Seatings</label>
@@ -265,6 +312,14 @@ const EditModal = (props) => {
               </div>
             </div>
           </div>
+          <div className="row justify-content-end pt-3">
+            <button className="btn btn-primary mr-2" type="submit">
+              Save
+            </button>
+            <button className="btn btn-primary" type="submit">
+              Cancel
+            </button>
+          </div>
           <div className="row">
             <label className="w-100 mb-2">Show Schedule</label>
             <div className="row w-100 p-2 align-items-center">
@@ -280,26 +335,6 @@ const EditModal = (props) => {
               &ensp;
               <input className="col-6 col-md-auto" type="time" />
               <i className="ml-auto fa fa-trash text-danger cursor-pointer"></i>
-            </div>
-          </div>
-          <div className="row">
-            <label className="w-100 mb-2">Event Organizers</label>
-            <div className="row">
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Akhil" />
-              </div>
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Arun" />
-              </div>
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Sujith" />
-              </div>
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Sujith" />
-              </div>
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Sujith" />
-              </div>
             </div>
           </div>
           <div className="row justify-content-end pt-3">
