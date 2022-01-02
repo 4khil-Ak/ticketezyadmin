@@ -29,7 +29,6 @@ const EventsManager = () => {
       setLoading(false);
       setManager(res.data);
     })
-    // console.log(manager);
   }, [])
 
   const onChangeHandler = () => {

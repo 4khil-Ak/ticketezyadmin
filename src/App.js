@@ -10,6 +10,7 @@ import AddEvent from "./Pages/AddEvent";
 import AddManager from "./Pages/AddManager";
 import AddPriceCard from "./Pages/AddPriceCard";
 import AddEventSchedule from "./Pages/AddEventSchedule";
+import EventDetails from "./Pages/EventDetails";
 
 export default function App() {
   const url = "/super_admins/login";
@@ -79,6 +80,7 @@ export default function App() {
           <Route path="eventsmanager" element={<EventsManager />}></Route>
           <Route path="addeventschedule" element={<AddEventSchedule />}></Route>
           <Route path="addpricecard" element={<AddPriceCard />}></Route>
+          <Route path="eventdetails" element={<EventDetails />}></Route>
           <Route path="addevent" element={<AddEvent />}></Route>
           <Route index path="events" element={<Events />}></Route>
         </Route>

@@ -20,7 +20,7 @@ const Manager = (props) => {
   }, [])
   return (
     <>
-      <div className="col-sm-6 col-md-3 px-3 py-2" key={props.manager.secret}>
+      <div className="col-sm-6 col-md-3 px-3 py-2">
         <div className="card box-shadow p-2">
           <div className="pb-2">
             <SwitchComponent checked={checked} handleChange={handleChange} />
@@ -35,7 +35,7 @@ const Manager = (props) => {
             <i className="footer-icon fas fa-eye text-primary"></i>
             <i
               className="footer-icon fas fa-edit text-secondary"
-              onClick={props.editModal}
+              // onClick={props.editModal}
             ></i>
             <i className="footer-icon fa fa-trash ml-auto mr-0  text-danger"></i>
           </div>

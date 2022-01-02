@@ -33,7 +33,7 @@ const EditModal = (props) => {
               <h4 className="m-0">Title of the Events Goes Here</h4>
             </div>
           </div>
-          <div
+          {/* <div
             className="position-relative banner-image w-100"
             style={{ height: "250px", overflow: "hidden" }}
           >
@@ -52,7 +52,7 @@ const EditModal = (props) => {
               alt="preview"
               style={{ zIndex: "2" }}
             />
-          </div>
+          </div> */}
           <div className="row">
             <div className="col-md-6 p-2">
               <div className="d-flex flex-column mb-3">
@@ -129,21 +129,9 @@ const EditModal = (props) => {
           </div>
           <div className="row">
             <label className="w-100 mb-2">Event Speakers</label>
-            <div className="row">
-              <div className="col-sm-2 p-1">
+            <div className="row w-100">
+              <div className="col-sm-3 col-lg-2 p-1">
                 <input className="w-100 px-2" type="text" value="Akhil" />
-              </div>
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Arun" />
-              </div>
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Sujith" />
-              </div>
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Sujith" />
-              </div>
-              <div className="col-sm-2 p-1">
-                <input className="w-100 px-2" type="text" value="Sujith" />
               </div>
             </div>
           </div>
@@ -155,7 +143,7 @@ const EditModal = (props) => {
               Cancel
             </button>
           </div>
-          <div className="w-100 p-2">
+          {/* <div className="w-100 p-2">
             <label className="mb-2">Price Card & Seatings</label>
             <div className="row py-1 align-items-center mb-3">
               <div className="d-flex align-items-center col-12 col-lg-3 p-0 pr-3 text-right">
@@ -344,7 +332,7 @@ const EditModal = (props) => {
             <button className="btn btn-primary" type="submit">
               Cancel
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

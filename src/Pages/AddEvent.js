@@ -1,24 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { LanguageOptions } from "../Helpers/LanguageOptions";
 import { CategoryOptions } from "../Helpers/CategoryOptions";
 import { AdultOptions } from "../Helpers/AdultOptions";
-import { EventsManager } from "../Helpers/EventsManager";
+import { useNavigate } from "react-router-dom";
+import { Alert } from "react-bootstrap";
+// import { EventsManager } from "../Helpers/EventsManager";
 import { axiosInstance, serviceUrl } from "../Service/utilities";
+import Axios from "axios";
+import Loader from "../UI/Loader";
 
 const AddEvent = () => {
+  let navigate = useNavigate();
   const [image, setImage] = useState(null);
+  const [managerDetails, setManagerDetails] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    Axios.get("https://apidev.ticketezy.com/event_managers", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    }).then(res => {
+      setLoading(false);
+      setManagerDetails(res.data);
+    })
+  }, [])
+  const [managerId, setManagerId] = useState({
+    managerid: ""
+  });
+  const [crew, setCrew] = useState({
+    name: "",
+    img: "img"
+  })
   const [eventInputs, setEventInputs] = useState({
     title: "",
     description: "",
-    time: "",
     venue: "",
     location: "",
     language: "",
     categories: "",
     duration: 0,
     adult_content: false,
+    cast_and_crew: [{ crew }]
   });
+
+  const EventsManager = [
+    { value: "a3bf49eae918873b279044af9d5d4c2d", label: "Akhil" },
+    { value: "d65d2235c81a204546c40b70e8d427b9", label: "Vasanth" }
+  ];
+
+  // const ManagerId = eventInputs.manager;
+  const url = `${serviceUrl}event_managers/${managerId.managerid}/events`;
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -51,45 +85,88 @@ const AddEvent = () => {
       tempEventInputs[event.target.name] = event.target.value;
     } else if (action) {
       tempEventInputs[action.name] = event.value;
-      // tempEventInputs[action.name] = event;
     }
     setEventInputs(tempEventInputs);
   };
 
+  // getPost(url)
+  // export const makeRequest = (funcParamURL) => {
+  //   const newUrl = funcParamURL;
+  //   return axios.get(newUrl);
+  // }
+
+  const managerChange = (event, action) => {
+    const tempInput = JSON.parse(JSON.stringify(managerId));
+    if (event.target) {
+      tempInput[event.target.name] = event.target.value;
+    } else if (action) {
+      tempInput[action.name] = event.value;
+    }
+    setManagerId(tempInput);
+  };
+
+
   const handleSubmit = () => {
     const tempEventInputs = JSON.parse(JSON.stringify(eventInputs));
-    tempEventInputs["time"] = new Date().toISOString();
-    axiosInstance
-      .post(
-        `${serviceUrl}event_managers/b774199413fabd8593a05c3f336efd08/events`,
-        {
-          event: tempEventInputs,
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+    // tempEventInputs["time"] = new Date().toISOString();
+    if (
+      eventInputs.title === "" ||
+      eventInputs.description === "" ||
+      eventInputs.venue === "" ||
+      eventInputs.location === "" ||
+      eventInputs.language === "" ||
+      eventInputs.categories === "" ||
+      eventInputs.duration === "" ||
+      eventInputs.adult_content === "" ||
+      eventInputs.cast_and_crew === ""
+    ) {
+      setError("Enter valid data !");
+    } else if (eventInputs.description.length < 10) {
+      setError("Description is too short");
+    } else {
+      setLoading(true);
+      axiosInstance
+        .post(
+          url,
+          {
+            event: tempEventInputs,
           },
-        }
-      )
-      .then((resp) => {
-        console.log(resp);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((resp) => {
+          setLoading(false);
+          navigate("/events");
+          console.log(resp);
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.error(error);
+        });
+    }
   };
+
+  const handleCancel = () => {
+    navigate("/events");
+  }
 
   return (
     <>
       <div className="details p-3" style={{ background: "#fff" }}>
         <h3 className="text-dark p-2">Create Event !</h3>
+        <div className="col-12 p-0">
+          {error && <Alert variant="danger">{error}</Alert>}
+        </div>
         <div
           className="d-flex flex-column p-4"
           style={{ background: "var(--secondary)", borderRadius: "8px" }}
         >
           <div className="row">
-            <div className="col-md-6 d-flex flex-column p-0 flex-wrap">
+            <div className="col-md-6 d-flex flex-column p-0 flex-md-wrap">
               <div
                 className="col-1 row p-0 align-items-center"
                 style={{ maxWidth: "100%" }}
@@ -219,7 +296,13 @@ const AddEvent = () => {
               <div className="col-md-4 p-2">
                 <div className="d-flex flex-column">
                   <label>Event Manager</label>
-                  <Select options={EventsManager} />
+                  <Select options={EventsManager}
+                    id="managerid"
+                    name="managerid"
+                    value={EventsManager.filter(function (option) {
+                      return option.value === managerId.managerid;
+                    })}
+                    onChange={managerChange} />
                 </div>
               </div>
               <div className="col-md-3 p-2">
@@ -240,14 +323,34 @@ const AddEvent = () => {
           </div>
           <div className="row p-2">
             <label className="mb-2">Event Speakers</label>
-            <i className="fas fa-plus text-success cursor-pointer mx-2 my-1"></i>
+            {/* <i className="fas fa-plus text-success cursor-pointer mx-2 my-1"></i> */}
             <div className="row w-100">
-              <div className="col-sm-2 p-1">
-                <input
-                  className="w-100 px-2 m-0"
-                  type="text"
-                  placeholder="Enter Organizer"
-                />
+              <div className="d-flex flex-column w-25">
+                {/* <div className="p-1">
+                  <div
+                    className="position-relative w-100 banner"
+                    style={{ height: "235px", overflow: "hidden" }}
+                  >
+                    <input
+                      type="file"
+                      onChange={onImageChange}
+                      className="filetype"
+                      id="crewimg"
+                      name="crewimg"
+                    />
+                    <label className="uplabel" htmlFor="crewimg">
+                      <i className="fa fa-upload fa-3x"></i>
+                    </label>
+                    {CrewImage}
+                  </div>
+                </div> */}
+                <div className="p-1">
+                  <input
+                    className="w-100 px-2 m-0"
+                    type="text"
+                    placeholder="Enter Event Speaker Name"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -260,11 +363,12 @@ const AddEvent = () => {
           >
             Save
           </button>
-          <button className="btn btn-primary px-3" type="submit">
+          <button className="btn btn-primary px-3" type="submit" onClick={handleCancel}>
             Cancel
           </button>
         </div>
       </div>
+      {loading && <Loader />}
     </>
   );
 };
