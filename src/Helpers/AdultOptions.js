@@ -1,4 +1,4 @@
 export const AdultOptions = [
-  { value: "Yes", label: "Yes" },
-  { value: "No", label: "No" }
+  { value: true, label: "Yes" },
+  { value: false, label: "No" }
 ];
