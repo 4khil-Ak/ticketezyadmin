@@ -4,9 +4,21 @@ import { LanguageOptions } from "../Helpers/LanguageOptions";
 import { CategoryOptions } from "../Helpers/CategoryOptions";
 import { AdultOptions } from "../Helpers/AdultOptions";
 import { EventsManager } from "../Helpers/EventsManager";
+import { axiosInstance, serviceUrl } from "../Service/utilities";
 
 const AddEvent = () => {
   const [image, setImage] = useState(null);
+  const [eventInputs, setEventInputs] = useState({
+    title: "",
+    description: "",
+    time: "",
+    venue: "",
+    location: "",
+    language: "",
+    categories: "",
+    duration: 0,
+    adult_content: false,
+  });
 
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -32,6 +44,42 @@ const AddEvent = () => {
       </>
     );
   }
+
+  const handleChange = (event, action) => {
+    const tempEventInputs = JSON.parse(JSON.stringify(eventInputs));
+    if (event.target) {
+      tempEventInputs[event.target.name] = event.target.value;
+    } else if (action) {
+      tempEventInputs[action.name] = event.value;
+      // tempEventInputs[action.name] = event;
+    }
+    setEventInputs(tempEventInputs);
+  };
+
+  const handleSubmit = () => {
+    const tempEventInputs = JSON.parse(JSON.stringify(eventInputs));
+    tempEventInputs["time"] = new Date().toISOString();
+    axiosInstance
+      .post(
+        `${serviceUrl}event_managers/b774199413fabd8593a05c3f336efd08/events`,
+        {
+          event: tempEventInputs,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <div className="details p-3" style={{ background: "#fff" }}>
@@ -60,6 +108,7 @@ const AddEvent = () => {
                     onChange={onImageChange}
                     className="filetype"
                     id="uploadimg"
+                    name="uploadimg"
                   />
                   <label className="uplabel" htmlFor="uploadimg">
                     <i className="fa fa-upload fa-3x"></i>
@@ -73,25 +122,53 @@ const AddEvent = () => {
               <div className="col-12 p-2">
                 <div className="d-flex flex-column">
                   <label htmlFor="title">Title</label>
-                  <input className="px-2 m-0" type="text" id="title" />
+                  <input
+                    className="px-2 m-0"
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={eventInputs.title}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="col-md-4 p-2">
                 <div className="d-flex flex-column">
                   <label htmlFor="venue">Venue</label>
-                  <input className="px-2 m-0" type="venue" id="venue" />
+                  <input
+                    className="px-2 m-0"
+                    type="venue"
+                    id="venue"
+                    name="venue"
+                    value={eventInputs.venue}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="col-md-5 p-2">
                 <div className="d-flex flex-column">
                   <label htmlFor="location">Location</label>
-                  <input className="px-2 m-0" type="text" id="location" />
+                  <input
+                    className="px-2 m-0"
+                    type="text"
+                    id="location"
+                    name="location"
+                    value={eventInputs.location}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="col-md-3 p-2">
                 <div className="d-flex flex-column">
                   <label htmlFor="duration">Duration</label>
-                  <input type="number" id="duration" className="px-2 m-0" />
+                  <input
+                    type="number"
+                    id="duration"
+                    name="duration"
+                    className="px-2 m-0"
+                    value={eventInputs.duration}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="col-md-12 p-2">
@@ -100,24 +177,43 @@ const AddEvent = () => {
                   <textarea
                     className="m-0"
                     id="description"
+                    name="description"
                     style={{
                       height: "inherit",
                       resize: "none",
-                      overflow: "auto"
+                      overflow: "auto",
                     }}
+                    value={eventInputs.description}
+                    onChange={handleChange}
                   ></textarea>
                 </div>
               </div>
               <div className="col-12 p-2">
                 <div className="d-flex flex-column">
-                  <label htmlFor="category">Category</label>
-                  <Select isMulti options={CategoryOptions} id="category" />
+                  <label htmlFor="categories">Category</label>
+                  <Select
+                    options={CategoryOptions}
+                    id="categories"
+                    name="categories"
+                    value={CategoryOptions.filter(function (option) {
+                      return option.value === eventInputs.categories;
+                    })}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="col-md-5 p-2">
                 <div className="d-flex flex-column">
                   <label htmlFor="language">Language</label>
-                  <Select isMulti options={LanguageOptions} id="language" />
+                  <Select
+                    options={LanguageOptions}
+                    id="language"
+                    name="language"
+                    value={LanguageOptions.filter(function (option) {
+                      return option.value === eventInputs.language;
+                    })}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
               <div className="col-md-4 p-2">
@@ -129,7 +225,15 @@ const AddEvent = () => {
               <div className="col-md-3 p-2">
                 <div className="d-flex flex-column">
                   <label htmlFor="adult">Adult Content</label>
-                  <Select options={AdultOptions} id="adult" />
+                  <Select
+                    options={AdultOptions}
+                    id="adult_content"
+                    name="adult_content"
+                    value={AdultOptions.filter(function (option) {
+                      return option.value === eventInputs.adult_content;
+                    })}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
             </div>
@@ -149,7 +253,11 @@ const AddEvent = () => {
           </div>
         </div>
         <div className="row justify-content-end pt-3">
-          <button className="btn btn-primary mr-2 px-3" type="submit">
+          <button
+            className="btn btn-primary mr-2 px-3"
+            type="button"
+            onClick={handleSubmit}
+          >
             Save
           </button>
           <button className="btn btn-primary px-3" type="submit">
