@@ -145,6 +145,7 @@ const AddEvent = () => {
         })
         .catch((error) => {
           setLoading(false);
+          setError(error.message);
           console.error(error);
         });
     }

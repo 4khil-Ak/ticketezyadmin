@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import "./styles.css";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
@@ -13,15 +13,35 @@ import AddEventSchedule from "./Pages/AddEventSchedule";
 import EventDetails from "./Pages/EventDetails";
 
 export default function App() {
-  const url = "/super_admins/login";
+  const url = "https://apidev.ticketezy.com/super_admins/login";
   let navigate = useNavigate();
-  const [isLoggedIn, setisLoggedIn] = useState(true);
-  const [error, setError] = useState(false);
-  const [loginCredential] = useState({
-    user_name: "!@#TICKETEZY!@#",
-    password: "Ticketezy@123"
+  const [adminAvail, setAdminAvail] = useState(() => {
+    // getting stored value
+    const checkId = localStorage.getItem("TicketezyAdmin")
+    const initialValue = JSON.parse(checkId);
+    return initialValue || "";
   });
-  const [adminDetails, setAdminDetails] = useState();
+  // useEffect(()=>{
+  // if (adminAvail !== null) {
+  //   setisLoggedIn(true);
+  // } else {
+  //   setisLoggedIn(false);
+  // }
+  // },[])
+  const [isLoggedIn, setisLoggedIn] = useState(() => {
+    if (adminAvail !== null) {
+      const initialValue = "true";
+      return initialValue || "";
+    } else {
+      const initialValue = "false";
+      return initialValue || "";
+    }
+  });
+  const [error, setError] = useState(false);
+  const [adminDetails, setAdminDetails] = useState({
+    email: "",
+    password: ""
+  });
   const onChangeHandler = (event) => {
     let val = event.target.value;
     setAdminDetails((prevState) => {
@@ -34,9 +54,9 @@ export default function App() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (adminDetails.email !== loginCredential.user_name) {
+    if (adminDetails.email === "null") {
       setError("Invalid UserName");
-    } else if (adminDetails.password !== loginCredential.password) {
+    } else if (adminDetails.password === "null") {
       setError("Invalid Password");
     } else {
       Axios.post(
@@ -53,6 +73,8 @@ export default function App() {
         }
       ).then((res) => {
         setisLoggedIn(true);
+        let adminId = res.data.message.cookies;
+        localStorage.setItem('TicketezyAdmin', JSON.stringify(adminId));
         navigate("/");
       });
     }
@@ -80,7 +102,9 @@ export default function App() {
           <Route path="eventsmanager" element={<EventsManager />}></Route>
           <Route path="addeventschedule" element={<AddEventSchedule />}></Route>
           <Route path="addpricecard" element={<AddPriceCard />}></Route>
-          <Route path="eventdetails" element={<EventDetails />}></Route>
+          <Route path="eventdetails">
+            <Route path=":id" element={<EventDetails />}></Route>
+          </Route>
           <Route path="addevent" element={<AddEvent />}></Route>
           <Route index path="events" element={<Events />}></Route>
         </Route>
@@ -91,7 +115,6 @@ export default function App() {
             <Login
               handleLogin={handleLogin}
               onChangeHandler={onChangeHandler}
-              // loginCredential={loginCredential}
               error={error}
             />
           }

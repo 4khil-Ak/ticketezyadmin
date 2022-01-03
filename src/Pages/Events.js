@@ -65,9 +65,9 @@ const Events = () => {
             Add New Event
           </div>
           <div className="header-options active">All</div>
-          <div className="header-options">Today</div>
+          {/* <div className="header-options">Today</div>
           <div className="header-options">Active</div>
-          <div className="header-options">Inactive</div>
+          <div className="header-options">Inactive</div> */}
           {/* <div className="header-options date-filter ml-auto mr-0 pr-1">
             <label htmlFor="date">Pick a date -&ensp;</label>
             <input type="date" placeholder="pick" id="date" />

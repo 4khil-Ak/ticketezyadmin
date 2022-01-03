@@ -256,6 +256,7 @@ img {
 .card-footer .footer-icon {
   margin-right: 10px;
   cursor: pointer;
+  text-decoration: none !important;
 }
 
 .card-footer .footer-icon:hover {
