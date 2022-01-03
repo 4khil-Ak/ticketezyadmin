@@ -14,7 +14,6 @@ const EventSchedule = (props) => {
             setEventSchedule(res.data);
         })
     }, [])
-    console.log(eventSchedule, "eventSchedule")
 
     let schedule = null;
     if (eventSchedule === null) {
@@ -23,21 +22,26 @@ const EventSchedule = (props) => {
         </>
     } else {
         if (Object.keys(eventSchedule).includes("schedules")) {
-            {
-                eventSchedule["schedules"].forEach((i, index) => {
-                    return (
-                        schedule = <>
-                            <div key={i}>
-                                {i.date} - {i.times.map((x)=>{
-                                    return (
-                                        <span key={x}>{x},&ensp;</span>
-                                    )
-                                })}
+            schedule = <>
+                {
+                    eventSchedule["schedules"].map((dataItem) => {
+                        return (
+                            <div className="col-12 p-2" key={dataItem.date}>
+                                <>
+                                    <span className="px-3 py-2 text-white mr-3" style={{background: "var(--primary)"}}>{dataItem.date}</span>
+                                    {dataItem.times.map((timestamp) => {
+                                        return (
+                                            <span className="px-3 py-2 mr-2 bg-warning text-white">
+                                                {timestamp}
+                                            </span>
+                                        )
+                                    })}
+                                </>
                             </div>
-                        </>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </>
         }
     }
     return (

@@ -14,7 +14,7 @@ const SeatLayout = (props) => {
             setSeatLayout(res.data);
         })
     }, [])
-    console.log(seatLayout, "seatLayout")
+    
     let seating = null;
     if (seatLayout === null) {
         seating = <>

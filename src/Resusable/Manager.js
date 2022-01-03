@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SwitchComponent from "../UI/Switch";
 import Axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const Manager = (props) => {
   const url = "https://apidev.ticketezy.com/event_managers/";
@@ -32,10 +33,10 @@ const Manager = (props) => {
             </p>
           </div>
           <div className="card-footer bg-transparent row py-2">
-            <i className="footer-icon fas fa-eye text-primary"></i>
+            <Link className="footer-icon fas fa-eye text-primary" to={`/managerdetails/${props.manager.secret}`} key={props.manager.secret}></Link>
             <i
               className="footer-icon fas fa-edit text-secondary"
-              // onClick={props.editModal}
+            // onClick={props.editModal}
             ></i>
             <i className="footer-icon fa fa-trash ml-auto mr-0  text-danger"></i>
           </div>

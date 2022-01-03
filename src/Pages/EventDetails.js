@@ -22,7 +22,6 @@ const EventDetails = (props) => {
             setSingleEventDetails(res.data);
         })
     }, [])
-
     let ui = null;
     if (singleEventDetails === null) {
         ui = <>
@@ -79,7 +78,7 @@ const EventDetails = (props) => {
                         <div className="col-md-3">
                             <div className="d-flex flex-column">
                                 <h5 className="p-1 pb-0 m-0 f-600">Adult Content</h5>
-                                <p className="p-1 pt-0 pl-3">{data.adult_content}</p>
+                                <p className="p-1 pt-0 pl-3">{data.adult_content ? "Yes" : "No"}</p>
                             </div>
                         </div>
                         <div className="col-md-12">
@@ -101,6 +100,7 @@ const EventDetails = (props) => {
             )
         })
     }
+    console.log()
     return (
         ui
     )

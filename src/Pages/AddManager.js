@@ -94,6 +94,9 @@ const AddManager = () => {
       });
     }
   };
+  const cancelHandler = () =>{
+    navigate("/eventsmanager");
+  }
   return (
     <>
       <div className="details p-3" style={{ background: "#fff" }}>
@@ -108,7 +111,7 @@ const AddManager = () => {
           <div className="col-md-4 row p-2 px-4">
             <p className="text-dark p-2 w-100">Manager Details</p>
             <div className="d-flex w-100 flex-column mb-md-3">
-              <label htmlfor="name">name</label>
+              <label htmlFor="name">name</label>
               <input
                 className="m-0 px-2"
                 type="text"
@@ -118,7 +121,7 @@ const AddManager = () => {
               />
             </div>
             <div className="d-flex w-100 flex-column mb-md-3">
-              <label htmlfor="companyname">Company Name</label>
+              <label htmlFor="companyname">Company Name</label>
               <input
                 className="m-0 px-2"
                 type="text"
@@ -128,7 +131,7 @@ const AddManager = () => {
               />
             </div>
             <div className="d-flex w-100 flex-column mb-md-3">
-              <label htmlfor="email">Email</label>
+              <label htmlFor="email">Email</label>
               <input
                 className="m-0 px-2"
                 type="email"
@@ -138,7 +141,7 @@ const AddManager = () => {
               />
             </div>
             <div className="d-flex w-100 flex-column">
-              <label htmlfor="number">Mobile Number</label>
+              <label htmlFor="number">Mobile Number</label>
               <input
                 className="m-0 px-2"
                 type="number"
@@ -151,7 +154,7 @@ const AddManager = () => {
           <div className="col-md-4 row p-2 px-4">
             <p className="text-dark p-2 w-100">Bank Details</p>
             <div className="d-flex w-100 flex-column mb-md-3">
-              <label htmlfor="account">Account Number</label>
+              <label htmlFor="account">Account Number</label>
               <input
                 className="m-0 px-2"
                 type="number"
@@ -161,7 +164,7 @@ const AddManager = () => {
               />
             </div>
             <div className="d-flex w-100 flex-column mb-md-3">
-              <label htmlfor="ifsc">IFSC</label>
+              <label htmlFor="ifsc">IFSC</label>
               <input
                 className="m-0 px-2"
                 type="text"
@@ -171,7 +174,7 @@ const AddManager = () => {
               />
             </div>
             <div className="d-flex w-100 flex-column mb-md-3">
-              <label htmlfor="branch">Branch Name</label>
+              <label htmlFor="branch">Branch Name</label>
               <input
                 className="m-0 px-2"
                 type="text"
@@ -181,7 +184,7 @@ const AddManager = () => {
               />
             </div>
             <div className="d-flex w-100 flex-column">
-              <label htmlfor="bank">Bank Name</label>
+              <label htmlFor="bank">Bank Name</label>
               <input
                 className="m-0 px-2"
                 type="text"
@@ -194,7 +197,7 @@ const AddManager = () => {
           <div className="col-md-4 row p-2 px-4 align-self-start">
             <p className="text-dark p-2 w-100">Personal Details</p>
             <div className="d-flex w-100 flex-column mb-md-3">
-              <label htmlfor="pan">Pan Number</label>
+              <label htmlFor="pan">Pan Number</label>
               <input
                 className="m-0 px-2"
                 type="text"
@@ -204,7 +207,7 @@ const AddManager = () => {
               />
             </div>
             <div className="d-flex w-100 flex-column">
-              <label htmlfor="aadhar">Aadhar</label>
+              <label htmlFor="aadhar">Aadhar</label>
               <input
                 className="m-0 px-2"
                 type="number"
@@ -223,7 +226,7 @@ const AddManager = () => {
           >
             Create
           </button>
-          <button className="btn btn-primary px-3" type="submit">
+          <button className="btn btn-primary px-3" type="submit" onClick={cancelHandler}>
             Cancel
           </button>
         </div>

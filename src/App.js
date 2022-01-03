@@ -8,9 +8,10 @@ import Events from "./Pages/Events";
 import EventsManager from "./Pages/EventsManager";
 import AddEvent from "./Pages/AddEvent";
 import AddManager from "./Pages/AddManager";
-import AddPriceCard from "./Pages/AddPriceCard";
-import AddEventSchedule from "./Pages/AddEventSchedule";
+import AddPriceCard from "./Component/Events/AddPriceCard";
+import AddEventSchedule from "./Component/Events/AddEventSchedule";
 import EventDetails from "./Pages/EventDetails";
+import ManagerDetails from "./Pages/ManagerDetails";
 
 export default function App() {
   const url = "https://apidev.ticketezy.com/super_admins/login";
@@ -81,6 +82,7 @@ export default function App() {
   };
   const handleLogout = (e) => {
     e.preventDefault();
+    window.localStorage.removeItem("TicketezyAdmin");
     setisLoggedIn(false);
   };
 
@@ -99,6 +101,9 @@ export default function App() {
           }
         >
           <Route path="addmanager" element={<AddManager />}></Route>
+          <Route path="managerdetails">
+            <Route path=":id" element={<ManagerDetails />}></Route>
+          </Route>
           <Route path="eventsmanager" element={<EventsManager />}></Route>
           <Route path="addeventschedule" element={<AddEventSchedule />}></Route>
           <Route path="addpricecard" element={<AddPriceCard />}></Route>
