@@ -23,18 +23,21 @@ const EventSchedule = (props) => {
         </>
     } else {
         if (Object.keys(eventSchedule).includes("schedules")) {
-            {eventSchedule["schedules"].forEach((e)=>{
-                return (
-                    <>{e.times},{e.date}</>
-                )
-            })}
-            schedule = <>
-                {/* {eventSchedule !== null && Object.keys(eventSchedule).map((data) => {
-                return (
-                    <h2 key={eventSchedule[schedules]}>{eventSchedule[schedules].date},</h2>
+            {
+                eventSchedule["schedules"].forEach((i, index) => {
+                    return (
+                        schedule = <>
+                            <div key={i}>
+                                {i.date} - {i.times.map((x)=>{
+                                    return (
+                                        <span key={x}>{x},&ensp;</span>
+                                    )
+                                })}
+                            </div>
+                        </>
                     )
-                })} */}
-            </>
+                })
+            }
         }
     }
     return (
