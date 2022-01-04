@@ -5,6 +5,7 @@ const SeatLayout = (props) => {
     const [seatLayout, setSeatLayout] = useState({});
     const url = `https://apidev.ticketezy.com/events/${props.data}/event_seats`
     useEffect(() => {
+        let list = [];
         Axios.get(url, {
             headers: {
                 'Accept': 'application/json',
@@ -14,7 +15,16 @@ const SeatLayout = (props) => {
             setSeatLayout(res.data);
         })
     }, [])
-    
+    let pricecard = null;
+    let seats = null;
+    if (seatLayout !== null) {
+        if (Object.keys(seatLayout).includes("seats")) {
+            seats = <>
+                
+            </>
+        }
+    }
+
     let seating = null;
     if (seatLayout === null) {
         seating = <>

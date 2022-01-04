@@ -1,14 +1,15 @@
 import Axios from "axios";
-import React from "react";
+import React, {useState} from "react";
+import Loader from "../UI/Loader";
 import { Link, useNavigate } from "react-router-dom";
 
 const DetailsCard = (props) => {
   let navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const onDeleteHandler = (details) => {
-    console.log("get in", details)
+    setLoading(true)
     let deleteId = details.secret;
     const url = `https://apidev.ticketezy.com/events_list/${deleteId}`;
-    console.log(url)
     Axios.delete(url, {
       header: {
         'Accept': 'application/json',
@@ -17,8 +18,12 @@ const DetailsCard = (props) => {
     }).then(res => {
       console.log(success);
       navigator("/events");
+      setLoading(false)
+      alert("Event has been deleted successfully")
     }).catch(error => {
       console.error('There was an error!', error);
+      setLoading(false)
+      alert("OOPS an error occured !\n\nPlease try again later")
     })
   }
   return (
@@ -37,12 +42,13 @@ const DetailsCard = (props) => {
             <Link className="footer-icon fas fa-eye text-primary" to={`/eventdetails/${props.details.secret}`} key={props.details.secret}></Link>
             <i
               className="footer-icon fas fa-edit text-secondary"
-            // onClick={props.editModal}
+              onClick={props.editModal}
             ></i>
             <i className="footer-icon fa fa-trash ml-auto mr-0 text-danger" onClick={() => onDeleteHandler(props.details)}></i>
           </div>
         </div>
       </div>
+      {loading && <Loader />}
     </>
   );
 };

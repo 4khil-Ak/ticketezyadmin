@@ -28,11 +28,11 @@ const EventSchedule = (props) => {
                         return (
                             <div className="col-12 p-2" key={dataItem.date}>
                                 <>
-                                    <span className="px-3 py-2 text-white mr-3" style={{background: "var(--primary)"}}>{dataItem.date}</span>
-                                    {dataItem.times.map((timestamp) => {
+                                    <span className="px-3 py-2 text-white mr-3" style={{ background: "var(--primary)" }}>{dataItem.date}</span>
+                                    {dataItem.times.map((time) => {
                                         return (
-                                            <span className="px-3 py-2 mr-2 bg-warning text-white">
-                                                {timestamp}
+                                            <span className="px-3 py-2 mr-2 bg-warning text-white" key={time}>
+                                                {time}
                                             </span>
                                         )
                                     })}

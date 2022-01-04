@@ -4,6 +4,7 @@ import "./styles.css";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Login from "./Pages/Login";
 import Admin from "./Pages/Admin";
+import Movies from "./Pages/Movies";
 import Events from "./Pages/Events";
 import EventsManager from "./Pages/EventsManager";
 import AddEvent from "./Pages/AddEvent";
@@ -111,7 +112,8 @@ export default function App() {
             <Route path=":id" element={<EventDetails />}></Route>
           </Route>
           <Route path="addevent" element={<AddEvent />}></Route>
-          <Route index path="events" element={<Events />}></Route>
+          <Route path="events" element={<Events />}></Route>
+          <Route index path="movies" element={<Movies />}></Route>
         </Route>
         <Route
           exact

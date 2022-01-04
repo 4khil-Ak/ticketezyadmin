@@ -60,7 +60,7 @@ const EventDetails = (props) => {
                         <div className="col-md-3">
                             <div className="d-flex flex-column">
                                 <h5 className="p-1 pb-0 m-0 f-600">Language</h5>
-                                <p className="p-1 pt-0 pl-3">{data.language}</p>
+                                <p className="p-1 pt-0 pl-3 text-capitalize">{data.language}</p>
                             </div>
                         </div>
                         <div className="col-md-3">
@@ -72,7 +72,7 @@ const EventDetails = (props) => {
                         <div className="col-md-3">
                             <div className="d-flex flex-column">
                                 <h5 className="p-1 pb-0 m-0 f-600">Categories</h5>
-                                <p className="p-1 pt-0 pl-3">{data.categories}</p>
+                                <p className="p-1 pt-0 pl-3 text-capitalize">{data.categories.slice(2,length-3)}</p>
                             </div>
                         </div>
                         <div className="col-md-3">

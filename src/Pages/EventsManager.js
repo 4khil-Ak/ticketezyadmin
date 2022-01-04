@@ -9,6 +9,7 @@ import $ from "jquery";
 const EventsManager = () => {
   const url = "https://apidev.ticketezy.com/event_managers";
   const [manager, setManager] = useState([]);
+  const [managerDetails, setManagerDetails] = useState(null);
   const [managerStatus, setManagerStatus] = useState([null])
   const [editModal, setEditModal] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -31,11 +32,18 @@ const EventsManager = () => {
     })
   }, [])
 
-  const onChangeHandler = () => {
+  const onChangeHandler = (managerData) => {
     setEditModal((prevState) => {
       return !prevState;
     });
+    setManagerDetails(managerData);
   };
+
+  const onCloseHandler = ()=> {
+    setEditModal((prevState) => {
+      return !prevState;
+    });
+  }
   const addNew = () => {
     navigate("/addmanager");
   };
@@ -45,11 +53,11 @@ const EventsManager = () => {
   }
 
   const active = () => {
-    setManagerStatus("Active");
+    setManagerStatus("active");
   }
 
   const inActive = () => {
-    setManagerStatus("Inactive");
+    setManagerStatus("inactive");
   }
 
   const NoData = () => {
@@ -64,7 +72,7 @@ const EventsManager = () => {
   }
 
   let ui = null;
-  if (managerStatus === "Active") {
+  if (managerStatus === "active") {
     ui = <>
       {manager !== null && manager.filter(x => x.status === "active").map((data) => {
         return (
@@ -73,12 +81,7 @@ const EventsManager = () => {
       })
       }
     </>
-    if (ui.ref === null) {
-      ui = <>
-        <NoData />
-      </>
-    }
-  } else if (managerStatus === "Inactive") {
+  } else if (managerStatus === "inactive") {
     ui = <>
       {manager !== null && manager.filter(x => x.status === "inactive").map((data) => {
         return (
@@ -90,7 +93,7 @@ const EventsManager = () => {
     ui = <>
       {manager !== null && manager.map((data) => {
         return (
-          <Manager manager={data} editModal={onChangeHandler} key={data.secret} />
+          <Manager manager={data} onCloseHandler={onCloseHandler} editModal={onChangeHandler} key={data.secret} />
         )
       })}
     </>
@@ -111,7 +114,7 @@ const EventsManager = () => {
           {ui}
         </div>
       </div>
-      {editModal && <ManagerEditModal editModal={onChangeHandler} />}
+      {editModal && <ManagerEditModal managerDetails={managerDetails} onCloseHandler={onCloseHandler} editModal={()=>onChangeHandler(managerData)} />}
       {loading && <Loader />}
     </>
   )

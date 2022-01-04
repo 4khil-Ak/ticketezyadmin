@@ -77,7 +77,7 @@ const Events = () => {
           {ui}
         </div>
       </div>
-      {editModal && <EditModal editModal={onChangeHandler} />}
+      {editModal && <EditModal editModal={()=>onChangeHandler(events)} />}
       {loading && <Loader />}
     </>
   );
