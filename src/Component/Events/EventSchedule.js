@@ -14,6 +14,12 @@ const EventSchedule = (props) => {
             setEventSchedule(res.data);
         })
     }, [])
+    
+    const toDate = (time) => {
+        var d = new Date(time*10000);
+        var value = d.toLocaleTimeString();
+        return value;
+    }
 
     let schedule = null;
     if (eventSchedule === null) {
@@ -32,7 +38,7 @@ const EventSchedule = (props) => {
                                     {dataItem.times.map((time) => {
                                         return (
                                             <span className="px-3 py-2 mr-2 bg-warning text-white" key={time}>
-                                                {time}
+                                                {toDate(time)}
                                             </span>
                                         )
                                     })}

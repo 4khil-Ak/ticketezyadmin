@@ -99,47 +99,46 @@ const AddEvent = () => {
   const handleSubmit = () => {
     eventInputs.cast_and_crew = [];
     eventInputs.cast_and_crew.push(...crew);
-    console.log(eventInputs);
-    // const tempEventInputs = JSON.parse(JSON.stringify(eventInputs));
-    // // tempEventInputs["time"] = new Date().toISOString();
-    // if (
-    //   eventInputs.title === "" ||
-    //   eventInputs.description === "" ||
-    //   eventInputs.venue === "" ||
-    //   eventInputs.location === "" ||
-    //   eventInputs.language === "" ||
-    //   eventInputs.categories === "" ||
-    //   eventInputs.duration === "" ||
-    //   eventInputs.adult_content === "" ||
-    //   eventInputs.cast_and_crew === ""
-    // ) {
-    //   setError("Enter valid data !");
-    // } else if (eventInputs.description.length < 10) {
-    //   setError("Description is too short");
-    // } else {
-    //   setLoading(true);
-    //   axiosInstance
-    //     .post(
-    //       url,
-    //       {
-    //         event: tempEventInputs,
-    //       },
-    //       {
-    //         headers: {
-    //           Accept: "application/json",
-    //           "Content-Type": "application/json",
-    //         },
-    //       }
-    //     )
-    //     .then((resp) => {
-    //       setLoading(false);
-    //       navigate("/events");
-    //     })
-    //     .catch((error) => {
-    //       setLoading(false);
-    //       setError(error.message);
-    //     });
-    // }
+    const tempEventInputs = JSON.parse(JSON.stringify(eventInputs));
+    // tempEventInputs["time"] = new Date().toISOString();
+    if (
+      eventInputs.title === "" ||
+      eventInputs.description === "" ||
+      eventInputs.venue === "" ||
+      eventInputs.location === "" ||
+      eventInputs.language === "" ||
+      eventInputs.categories === "" ||
+      eventInputs.duration === "" ||
+      eventInputs.adult_content === "" ||
+      eventInputs.cast_and_crew === ""
+    ) {
+      setError("Enter valid data !");
+    } else if (eventInputs.description.length < 10) {
+      setError("Description is too short");
+    } else {
+      setLoading(true);
+      axiosInstance
+        .post(
+          url,
+          {
+            event: tempEventInputs,
+          },
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((resp) => {
+          setLoading(false);
+          navigate("/events");
+        })
+        .catch((error) => {
+          setLoading(false);
+          setError(error.message);
+        });
+    }
   };
 
   const handleCancel = () => {
