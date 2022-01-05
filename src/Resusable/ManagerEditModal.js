@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import Loader from "../UI/Loader";
-import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 
 const EditModal = (props) => {
-  let navigate = useNavigate();
   const url = `https://apidev.ticketezy.com/event_managers/${props.managerDetails.secret}`
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false);
-  console.log(props.managerDetails);
   const [editDetails, setEditDetails] = useState({
     name: props.managerDetails.name,
     companyname: props.managerDetails.company_name,

@@ -10,6 +10,7 @@ const Events = () => {
   let navigate = useNavigate();
   const url = "https://apidev.ticketezy.com/events_list";
   const [events, setEvents] = useState([]);
+  const [eventDetails, setEventDetails] = useState(null);
   const [editModal, setEditModal] = useState(false);
   const [loading, setLoading] = useState(true);
   $(document).ready(function () {
@@ -29,11 +30,18 @@ const Events = () => {
       setEvents(res.data);
     })
   }, [])
-  const onChangeHandler = () => {
+  const onChangeHandler = (eventData) => {
     setEditModal((prevState) => {
       return !prevState;
     });
+    setEventDetails(eventData);
   };
+
+  const onCloseHandler = ()=> {
+    setEditModal((prevState) => {
+      return !prevState;
+    });
+  }
 
   const addNew = () => {
     navigate("/addevent");
@@ -77,7 +85,7 @@ const Events = () => {
           {ui}
         </div>
       </div>
-      {editModal && <EditModal editModal={()=>onChangeHandler(events)} />}
+      {editModal && <EditModal eventDetails={eventDetails} onCloseHandler={onCloseHandler} editModal={()=>onChangeHandler(eventData)} />}
       {loading && <Loader />}
     </>
   );

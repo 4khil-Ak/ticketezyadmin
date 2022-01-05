@@ -8,7 +8,6 @@ const Manager = (props) => {
   let id = null;
   const [loading, setLoading] = useState(false);
   const [checked, setChecked] = useState(false);
-  const [active, setActive] = useState(false);
   const handleChange = () => {
     setChecked((prevState) => {
       return !prevState;
@@ -33,7 +32,7 @@ const Manager = (props) => {
       window.location.reload();
     }).catch((error) => {
       setLoading(false)
-      alert("A Network error occured !/nTry again later");
+      alert("A Network error occured !\nPlease try again later");
     })
   };
   useEffect(() => {
@@ -52,13 +51,11 @@ const Manager = (props) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
-    }).then(res => {
-      console.log(success);
-      navigator("/eventsmanager");
-      setLoading(false)
-      alert("Manager has been deleted successfully")
+    }).then((res) => {
+      setLoading(false);
+      alert("Manager has been deleted successfully");
+      window.location.reload();
     }).catch((error) => {
-      console.error('There was an error!', error);
       setLoading(false)
       alert("OOPS an error occured !\n\nPlease try again later")
     })

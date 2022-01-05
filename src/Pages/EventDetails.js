@@ -22,13 +22,14 @@ const EventDetails = (props) => {
             setSingleEventDetails(res.data);
         })
     }, [])
+    const tempInputs = JSON.parse(JSON.stringify(singleEventDetails));
     let ui = null;
-    if (singleEventDetails === null) {
+    if (tempInputs === null) {
         ui = <>
             {loading && <Loader />}
         </>
     } else {
-        ui = singleEventDetails.filter(x => x.secret === params.id).map((data) => {
+        ui = tempInputs.filter(x => x.secret === params.id).map((data) => {
             return (
                 <div className="p-3 bg-white" key={data.secret}>
                     <h6 className="py-2 m-0 text-primary">Event Details</h6>
@@ -84,7 +85,9 @@ const EventDetails = (props) => {
                         <div className="col-md-12">
                             <div className="d-flex flex-column">
                                 <h5 className="p-1 pb-0 m-0 f-600">Cast & Crew</h5>
-                                <p className="p-1 pt-0 pl-3">{data.cast_and_crew}</p>
+                                <p className="p-1 pt-0 pl-3">
+                                {data.cast_and_crew}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -100,7 +103,6 @@ const EventDetails = (props) => {
             )
         })
     }
-    console.log()
     return (
         ui
     )
