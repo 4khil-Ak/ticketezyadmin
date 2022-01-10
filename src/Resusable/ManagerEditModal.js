@@ -3,7 +3,7 @@ import Axios from "axios";
 import Loader from "../UI/Loader";
 import { Alert } from "react-bootstrap";
 
-const EditModal = (props) => {
+const ManagerEditModal = (props) => {
   const url = `https://apidev.ticketezy.com/event_managers/${props.managerDetails.secret}`
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false);
@@ -273,4 +273,4 @@ const EditModal = (props) => {
   );
 };
 
-export default EditModal;
+export default ManagerEditModal;

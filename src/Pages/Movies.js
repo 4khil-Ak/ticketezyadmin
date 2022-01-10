@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DetailsCard from "../Resusable/DetailsCard";
-import EditModal from "../Resusable/EditModal";
 import Axios from "axios";
 import Loader from "../UI/Loader";
 import $ from "jquery";
+import DetailsCard from "../Component/Movies/DetailsCard";
 
 const movies = () => {
     let navigate = useNavigate();
-    const url = "https://apidev.ticketezy.com/movies_list";
+    const url = "https://apidev.ticketezy.com/movies";
     const [movies, setMovies] = useState(null);
     const [editModal, setEditModal] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -68,19 +67,12 @@ const movies = () => {
                         Add New Movie
                     </div>
                     <div className="header-options active">All</div>
-                    {/* <div className="header-options">Today</div>
-          <div className="header-options">Active</div>
-          <div className="header-options">Inactive</div> */}
-                    {/* <div className="header-options date-filter ml-auto mr-0 pr-1">
-            <label htmlFor="date">Pick a date -&ensp;</label>
-            <input type="date" placeholder="pick" id="date" />
-          </div> */}
                 </div>
                 <div className="grid-view-section row">
                     {ui}
                 </div>
             </div>
-            {editModal && <EditModal editModal={() => onChangeHandler(movies)} />}
+            {/* {editModal && <EditModal editModal={() => onChangeHandler(movies)} />} */}
             {loading && <Loader />}
         </>
     );

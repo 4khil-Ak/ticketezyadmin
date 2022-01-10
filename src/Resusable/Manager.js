@@ -47,7 +47,7 @@ const Manager = (props) => {
     let deleteId = manager.secret;
     const url = `https://apidev.ticketezy.com/event_managers/${deleteId}`;
     Axios.delete(url, {
-      header: {
+      headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
@@ -69,9 +69,7 @@ const Manager = (props) => {
             <p className="name f-600">{props.manager.name}</p>
             <p className="company">{props.manager.company_name}</p>
             <p className="number">{props.manager.mobile}</p>
-            <p className="eventno">
-              Number of events <span className="f-600">:&ensp;3</span>
-            </p>
+            <p className="eventno">{props.manager.email}</p>
           </div>
           <div className="card-footer bg-transparent row py-2">
             <Link className="footer-icon fas fa-eye text-primary" to={`/managerdetails/${props.manager.secret}`} key={props.manager.secret}></Link>

@@ -24,7 +24,7 @@ const Navbar = (props) => {
       <div className="collapse navbar-collapse" id="collapsibleNavbar">
         <ul className="navbar-nav w-100 justify-content-end">
           <li className="nav-item">
-            <Link className="nav-link" to={`/movies`}>
+            <Link className="nav-link" to={`/`}>
               Movies
             </Link>
           </li>

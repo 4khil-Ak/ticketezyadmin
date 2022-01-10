@@ -4,9 +4,10 @@ import "./styles.css";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Login from "./Pages/Login";
 import Admin from "./Pages/Admin";
+import Theatres from "./Pages/Theatres";
 import Movies from "./Pages/Movies";
-import Events from "./Pages/Events";
 import EventsManager from "./Pages/EventsManager";
+import Events from "./Pages/Events";
 import AddEvent from "./Pages/AddEvent";
 import AddManager from "./Pages/AddManager";
 import AddPriceCard from "./Component/Events/AddPriceCard";
@@ -17,29 +18,14 @@ import ManagerDetails from "./Pages/ManagerDetails";
 export default function App() {
   const url = "https://apidev.ticketezy.com/super_admins/login";
   let navigate = useNavigate();
-  const [adminAvail, setAdminAvail] = useState(() => {
-    // getting stored value
-    const checkId = localStorage.getItem("TicketezyAdmin")
-    const initialValue = JSON.parse(checkId);
-    return initialValue || "";
-  });
-  // useEffect(()=>{
-  // if (adminAvail !== null) {
-  //   setisLoggedIn(true);
-  // } else {
-  //   setisLoggedIn(false);
-  // }
-  // },[])
   const [isLoggedIn, setisLoggedIn] = useState(() => {
-    if (adminAvail !== null) {
-      const initialValue = "true";
-      return initialValue || "";
+    if (localStorage.getItem("TicketezyAdmin") === null) {
+      return false
     } else {
-      const initialValue = "false";
-      return initialValue || "";
+      return true
     }
-  });
-  const [error, setError] = useState(false);
+  })
+  const [error, setError] = useState(null);
   const [adminDetails, setAdminDetails] = useState({
     email: "",
     password: ""
@@ -113,7 +99,8 @@ export default function App() {
           </Route>
           <Route path="addevent" element={<AddEvent />}></Route>
           <Route path="events" element={<Events />}></Route>
-          <Route index path="movies" element={<Movies />}></Route>
+          <Route path="theaters" element={<Theatres />}></Route>
+          <Route index element={<Movies />}></Route>
         </Route>
         <Route
           exact
