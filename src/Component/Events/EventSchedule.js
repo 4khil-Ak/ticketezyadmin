@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 const EventSchedule = (props) => {
     const [eventSchedule, setEventSchedule] = useState({});
@@ -24,7 +25,7 @@ const EventSchedule = (props) => {
     let schedule = null;
     if (eventSchedule === null) {
         schedule = <>
-            <small className="px-3 py-1 ml-3 text-white" style={{ background: "var(--primary)" }}>Add Event Schedule</small>
+            <Link className="px-3 py-1 ml-3 text-white add-seat" to={`/events/${props.data}/event_schedules`} role="button">Add Event Schedule</Link>
         </>
     } else {
         if (Object.keys(eventSchedule).includes("schedules")) {

@@ -6,11 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 const DetailsCard = (props) => {
   const [loading, setLoading] = useState(false);
   const onDeleteHandler = (details) => {
+    alert("Are you sure want to delete this event")
     setLoading(true)
     let deleteId = details.secret;
-    const url = `https://apidev.ticketezy.com/events_list/${deleteId}`;
+    const url = `https://apidev.ticketezy.com/events/${deleteId}`;
     Axios.delete(url, {
-      header: {
+      headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       }
@@ -35,7 +36,6 @@ const DetailsCard = (props) => {
             <p className="duration">Duration: <b>{props.details.duration}</b></p>
           </div>
           <div className="card-footer bg-transparent row py-2">
-            {/* <i className="footer-icon fas fa-eye text-primary"></i> */}
             <Link className="footer-icon fas fa-eye text-primary" to={`/eventdetails/${props.details.secret}`} key={props.details.secret}></Link>
             <i
               className="footer-icon fas fa-edit text-secondary"

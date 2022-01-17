@@ -32,25 +32,25 @@ const AddCrew = (props) => {
     }
     return (
         <div className="d-flex flex-column w-25">
-            <div className="p-1">
+            {/* <div className="p-1">
                 <div
                     className="position-relative w-100 banner"
                     style={{ height: "235px", overflow: "hidden" }}
                 >
-                    {/* <input
+                    <input
                         type="file"
                         onChange={e => onImageChange(e)}
                         onChange={onImageChange}
                         className="filetype"
                         id="crewimg"
                         name="crewimg"
-                    /> */}
+                    />
                     <label className="uplabel" htmlFor="crewimg">
                         <i className="fa fa-upload fa-3x"></i>
                     </label>
                     {Image}
                 </div>
-            </div>
+            </div> */}
             <div className="p-1">
                 <input
                     className="w-100 px-2 m-0"

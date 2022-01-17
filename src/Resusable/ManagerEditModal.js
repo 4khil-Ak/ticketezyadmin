@@ -46,6 +46,8 @@ const ManagerEditModal = (props) => {
       setError("Name cannot contain special character");
     } else if (editDetails.companyname.match(/^[a-zA-Z ]+$/) === null) {
       setError("Enter valid company name");
+    } else if (editDetails.name.length < 3) {
+      setError("Name is too short");
     } else if (
       editDetails.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/) ===
       null
@@ -53,10 +55,16 @@ const ManagerEditModal = (props) => {
       setError("Enter valid email !");
     } else if (editDetails.number.length !== 10) {
       setError("Enter valid mobile number !");
+    } else if (editDetails.account.length < 9) {
+      setError("Account number is too short (minimum is 9 characters)")
     } else if (editDetails.branch.match(/^[a-zA-Z ]+$/) === null) {
       setError("Incorrect Branch Name");
+    } else if (editDetails.branch.length < 3) {
+      setError("Branch Name is too short (minimum is 3 characters)");
     } else if (editDetails.bank.match(/^[a-zA-Z ]+$/) === null) {
       setError("Enter valid Bank Name");
+    } else if (editDetails.bank.length < 3) {
+      setError("Bank Name is too short (minimum is 3 characters)");
     } else if (editDetails.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/) === null) {
       setError("Enter valid pan number !");
     } else if (editDetails.aadhar.length !== 12) {
@@ -89,9 +97,11 @@ const ManagerEditModal = (props) => {
         setLoading(false);
         alert("Upadted Successfully")
         window.location.reload();
-      }).catch((updateerror) => {
+      }).catch((error) => {
         setLoading(false);
-        alert("A network error occured/nTry again later");
+        if (error.response.data.errors.email !== null && error.response.data.errors.email) {
+          setError(error.response.data.errors.email)
+        }
       });
     }
   };

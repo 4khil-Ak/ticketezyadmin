@@ -47,6 +47,8 @@ const AddManager = () => {
       setError("Enter valid data !");
     } else if (managerDetails.name.match(/^[a-zA-Z ]+$/) === null) {
       setError("Name cannot contain special character");
+    } else if (managerDetails.name.length < 3) {
+      setError("Name is too short");
     } else if (managerDetails.companyname.match(/^[a-zA-Z ]+$/) === null) {
       setError("Enter valid company name");
     } else if (
@@ -56,10 +58,16 @@ const AddManager = () => {
       setError("Enter valid email !");
     } else if (managerDetails.number.length !== 10) {
       setError("Enter valid mobile number !");
+    } else if (managerDetails.account.length < 9) {
+      setError("Account number is too short (minimum is 9 characters)")
     } else if (managerDetails.branch.match(/^[a-zA-Z ]+$/) === null) {
       setError("Incorrect Branch Name");
+    } else if (managerDetails.branch.length < 3) {
+      setError("Branch Name is too short (minimum is 3 characters)");
     } else if (managerDetails.bank.match(/^[a-zA-Z ]+$/) === null) {
       setError("Enter valid Bank Name");
+    } else if (managerDetails.bank.length < 3) {
+      setError("Bank Name is too short (minimum is 3 characters)");
     } else if (managerDetails.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/) === null) {
       setError("Enter valid pan number !");
     } else if (managerDetails.aadhar.length !== 12) {
@@ -91,10 +99,15 @@ const AddManager = () => {
       ).then((res) => {
         setLoading(false);
         navigate("/eventsmanager");
+      }).catch((error) => {
+        setLoading(false);
+        if (error.response.data.errors.email !== null && error.response.data.errors.email) {
+          setError(error.response.data.errors.email)
+        }
       });
     }
   };
-  const cancelHandler = () =>{
+  const cancelHandler = () => {
     navigate("/eventsmanager");
   }
   return (

@@ -401,3 +401,8 @@ img {
     margin-bottom: 8px;
   }
 }
+
+a.add-seat {
+  background: var(--primary);
+  text-decoration: none !important;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 const SeatLayout = (props) => {
     const [seatLayout, setSeatLayout] = useState({});
@@ -16,19 +17,10 @@ const SeatLayout = (props) => {
         })
     }, [])
     let pricecard = null;
-    let seats = null;
-    if (seatLayout !== null) {
-        if (Object.keys(seatLayout).includes("seats")) {
-            seats = <>
-                
-            </>
-        }
-    }
-
     let seating = null;
     if (seatLayout === null) {
         seating = <>
-            <small className="px-3 py-1 ml-3 text-white" style={{ background: "var(--primary)" }}>Add Details</small>
+            <Link className="px-3 py-1 ml-3 text-white add-seat" to={`/events/${props.data}/event_seats`} role="button">Add Details</Link>
         </>
     } else if (seatLayout !== null) {
         seating = <>

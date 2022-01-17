@@ -42,10 +42,10 @@ export default function App() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (adminDetails.email === "null") {
-      setError("Invalid UserName");
-    } else if (adminDetails.password === "null") {
-      setError("Invalid Password");
+    if (adminDetails.email === null) {
+      setError("Enter UserName");
+    } else if (adminDetails.password === null) {
+      setError("Enter Password");
     } else {
       Axios.post(
         url,
@@ -64,6 +64,8 @@ export default function App() {
         let adminId = res.data.message.cookies;
         localStorage.setItem('TicketezyAdmin', JSON.stringify(adminId));
         navigate("/");
+      }).catch((error) => {
+        setError("Invalid Username or Password")
       });
     }
   };
@@ -92,8 +94,8 @@ export default function App() {
             <Route path=":id" element={<ManagerDetails />}></Route>
           </Route>
           <Route path="eventsmanager" element={<EventsManager />}></Route>
-          <Route path="addeventschedule" element={<AddEventSchedule />}></Route>
-          <Route path="addpricecard" element={<AddPriceCard />}></Route>
+          <Route path="/events/:id/event_schedules" element={<AddEventSchedule />}></Route>
+          <Route path="/events/:id/event_seats" element={<AddPriceCard />}></Route>
           <Route path="eventdetails">
             <Route path=":id" element={<EventDetails />}></Route>
           </Route>

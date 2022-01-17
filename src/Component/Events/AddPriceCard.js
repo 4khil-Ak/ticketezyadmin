@@ -1,6 +1,8 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const AddPriceCard = () => {
+  let params = useParams();
   return (
     <>
       <div className="details p-3" style={{ background: "#fff" }}>
@@ -69,6 +71,19 @@ const AddPriceCard = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="row justify-content-end pt-3">
+          <button
+            className="btn btn-primary mr-2 px-3"
+            type="button"
+          // onClick={handleSubmit}
+          >
+            Save
+          </button>
+          <button className="btn btn-primary px-3" type="submit">
+            {/* onClick={handleCancel} */}
+            Cancel
+          </button>
         </div>
       </div>
     </>

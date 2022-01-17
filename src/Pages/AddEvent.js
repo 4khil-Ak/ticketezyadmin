@@ -37,7 +37,7 @@ const AddEvent = () => {
     venue: "",
     location: "",
     language: "",
-    categories: "",
+    categories: [],
     duration: 0,
     adult_content: false,
     cast_and_crew: []

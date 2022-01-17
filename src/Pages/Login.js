@@ -3,12 +3,12 @@ import { Alert } from "react-bootstrap";
 
 const Login = (props) => {
   return (
-    <div class="login-body">
-      <div class="login">
-        <div class="form">
-          <form class="login-form" onSubmit={props.handleLogin}>
+    <div className="login-body">
+      <div className="login">
+        <div className="form">
+          <form className="login-form" onSubmit={props.handleLogin}>
             <div className="d-flex justify-content-center">
-              <span class="fa fa-lock mb-3"></span>&ensp;
+              <span className="fa fa-lock mb-3"></span>&ensp;
               <span>Admin Login</span>
             </div>
             <input
