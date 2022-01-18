@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import Axios from "axios";
+import Select from "react-select";
+import SelectComponent from "../../UI/Select";
+import { TheaterType } from "../../Helpers/TheaterType";
 import Loader from "../../UI/Loader";
 import { Alert } from "react-bootstrap";
 
 const EditModal = (props) => {
-  const url = `https://apidev.ticketezy.com/theatres/${props.theatreDetails.secret}`
+  const url = `https://apidev.ticketezy.com/theatres/${props.theatreDetails.secret}/update`
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false);
   const [editDetails, setEditDetails] = useState({
     name: props.theatreDetails.name,
-    companyname: props.theatreDetails.company_name,
-    email: props.theatreDetails.email,
-    number: props.theatreDetails.mobile,
-    account: props.theatreDetails.account_number,
-    ifsc: props.theatreDetails.ifsc_code,
-    branch: props.theatreDetails.branch_name,
-    bank: props.theatreDetails.bank_name,
-    pan: props.theatreDetails.pan_number,
-    aadhar: props.theatreDetails.aadhar
+    owner: props.theatreDetails.owner,
+    mobile: props.theatreDetails.mobile,
+    address: props.theatreDetails.address,
+    place: props.theatreDetails.place,
+    location: props.theatreDetails.location,
+    since: props.theatreDetails.since,
+    theatre_type: props.theatreDetails.theatre_type
+    // pan_number: props.theatreDetails.pan_number,
+    // gst_number: props.theatreDetails.gst_number,
+    // aadhar_number: props.theatreDetails.aadhar_number
   })
   const onChangeHandler = (event, action) => {
     const tempEditDetails = JSON.parse(JSON.stringify(editDetails));
@@ -31,58 +35,32 @@ const EditModal = (props) => {
   const updateHandler = () => {
     if (
       editDetails.name === "" ||
-      editDetails.companyname === "" ||
-      editDetails.email === "" ||
-      editDetails.number === "" ||
-      editDetails.account === "" ||
-      editDetails.ifsc === "" ||
-      editDetails.branch === "" ||
-      editDetails.bank === "" ||
-      editDetails.pan === "" ||
-      editDetails.aadhar === ""
+      editDetails.owner === "" ||
+      editDetails.place === "" ||
+      editDetails.mobile === "" ||
+      editDetails.since === "" ||
+      editDetails.location === "" ||
+      editDetails.address === "" ||
+      editDetails.theatre_type === ""
     ) {
       setError("Enter valid data !");
-    } else if (editDetails.name.match(/^[a-zA-Z ]+$/) === null) {
-      setError("Name cannot contain special character");
-    } else if (editDetails.companyname.match(/^[a-zA-Z ]+$/) === null) {
-      setError("Enter valid company name");
-    } else if (
-      editDetails.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/) ===
-      null
-    ) {
-      setError("Enter valid email !");
-    } else if (editDetails.number.length !== 10) {
+    } else if (editDetails.name.length < 5) {
+      setError("Name is too short (minimum is 5 characters)");
+    } else if (editDetails.owner.length < 3) {
+      setError("Owner is too short (minimum is 3 characters)");
+    } else if (editDetails.mobile.length !== 10) {
       setError("Enter valid mobile number !");
-    } else if (editDetails.branch.match(/^[a-zA-Z ]+$/) === null) {
-      setError("Incorrect Branch Name");
-    } else if (editDetails.bank.match(/^[a-zA-Z ]+$/) === null) {
-      setError("Enter valid Bank Name");
-    } else if (editDetails.pan.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/) === null) {
-      setError("Enter valid pan number !");
-    } else if (editDetails.aadhar.length !== 12) {
-      setError("Enter valid aadhar number !");
     } else {
       setLoading(true);
       Axios.patch(
         url,
         {
-          event_manager: {
-            name: editDetails.name,
-            company_name: editDetails.companyname,
-            pan_number: editDetails.pan,
-            aadhar: editDetails.aadhar,
-            email: editDetails.email,
-            mobile: editDetails.number,
-            account_number: editDetails.account,
-            ifsc_code: editDetails.ifsc,
-            branch_name: editDetails.branch,
-            bank_name: editDetails.bank
-          }
+          theatre: editDetails
         },
         {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
           }
         }
       ).then((res) => {
@@ -113,11 +91,10 @@ const EditModal = (props) => {
               Close&ensp;&ensp;<i className="fa fa-close"></i>
             </div>
             <div className="d-flex align-items-center ml-auto p-2">
-              <h4 className="m-0">Event Manager Name</h4>
+              <h4 className="m-0">{editDetails.name}</h4>
             </div>
           </div>
           <div className="row ">
-            <p className="text-dark p-2 w-100">Manager Details</p>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
                 <label htmlfor="name">name</label>
@@ -127,134 +104,144 @@ const EditModal = (props) => {
                   id="name"
                   onChange={onChangeHandler}
                   value={editDetails.name}
-                  placeholder="Enter Event Manager Name"
+                  placeholder="Enter Theater Name"
                 />
               </div>
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="companyname">Company Name</label>
+                <label htmlfor="owner">Owner Name</label>
                 <input
                   className="m-0 px-2"
                   type="text"
-                  id="companyname"
+                  id="owner"
                   onChange={onChangeHandler}
-                  value={editDetails.companyname}
-                  placeholder="Enter Company Name"
+                  value={editDetails.owner}
+                  placeholder="Enter Owner Name"
                 />
               </div>
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="email">Email</label>
+                <label htmlfor="mobile">Mobile</label>
                 <input
                   className="m-0 px-2"
-                  type="email"
-                  id="email"
+                  type="number"
+                  id="mobile"
                   onChange={onChangeHandler}
-                  value={editDetails.email}
-                  placeholder="Enter Your Email"
+                  value={editDetails.mobile}
+                  placeholder="Enter Mobile Number"
                 />
               </div>
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column">
-                <label htmlfor="number">Mobile Number</label>
-                <input
+                <label htmlfor="address">Address</label>
+                <textarea
                   className="m-0 px-2"
-                  type="number"
-                  id="number"
+                  id="address"
                   onChange={onChangeHandler}
-                  value={editDetails.number}
+                  value={editDetails.address}
                   placeholder="Mobile Number"
                 />
               </div>
             </div>
           </div>
           <div className="row">
-            <p className="text-dark p-2 w-100">Bank Details</p>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="account">Account Number</label>
+                <label htmlFor="place">Place</label>
                 <input
                   className="m-0 px-2"
                   type="text"
-                  id="account"
+                  id="place"
                   onChange={onChangeHandler}
-                  value={editDetails.account}
-                  placeholder="Enter Account Number"
+                  value={editDetails.place}
+                  placeholder="Enter Place"
                 />
               </div>
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="ifsc">IFSC</label>
+                <label htmlFor="location">Location</label>
                 <input
                   className="m-0 px-2"
                   type="text"
-                  id="ifsc"
+                  id="location"
                   onChange={onChangeHandler}
-                  value={editDetails.ifsc}
-                  placeholder="Enter IFSC code"
+                  value={editDetails.location}
+                  placeholder="Enter Location"
                 />
               </div>
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="branch">Branch Name</label>
+                <label htmlFor="since">Theater Since</label>
                 <input
                   className="m-0 px-2"
-                  type="text"
-                  id="branch"
+                  type="number"
+                  id="since"
                   onChange={onChangeHandler}
-                  value={editDetails.branch}
-                  placeholder="Enter Branch Name"
+                  value={editDetails.since}
+                  placeholder="Year of foundation"
                 />
               </div>
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column">
-                <label htmlfor="bank">Bank Name</label>
-                <input
-                  className="m-0 px-2"
-                  type="text"
-                  id="bank"
-                  onChange={onChangeHandler}
-                  value={editDetails.bank}
-                  placeholder="Enter Bank Name"
+                <label htmlFor="type">Theater Type</label>
+                <SelectComponent
+                  options={TheaterType}
+                  // className="m-0 px-2"
+                  id="theatre_type"
+                  name="theatre_type"
+                  value={editDetails.theatre_type}
+                  onChangeHandler={onChangeHandler}
                 />
               </div>
             </div>
           </div>
-          <div className="row">
-            <p className="text-dark p-2 w-100">Personal Details</p>
+          {/* <div className="row">
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="pan">Pan Number</label>
+                <label htmlFor="pan_number">Pan Number</label>
                 <input
                   className="m-0 px-2"
                   type="text"
-                  id="pan"
+                  id="pan_number"
                   onChange={onChangeHandler}
-                  value={editDetails.pan}
+                  value={editDetails.pan_number}
                   placeholder="Enter Pan Number"
                 />
               </div>
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column">
-                <label htmlfor="aadhar">Aadhar</label>
+                <label htmlFor="gst_number">GST</label>
                 <input
                   className="m-0 px-2"
-                  type="text"
-                  id="aadhar"
+                  type="number"
+                  id="gst_number"
                   onChange={onChangeHandler}
-                  value={editDetails.aadhar}
+                  value={editDetails.gst_number}
                   placeholder="Enter Aadhar Number"
                 />
               </div>
             </div>
-          </div>
+            <div className="col-md-6 p-2">
+              <div className="d-flex w-100 flex-column">
+                <label htmlFor="aadhar_number">Aadhar</label>
+                <input
+                  className="m-0 px-2"
+                  type="number"
+                  id="aadhar_number"
+                  onChange={onChangeHandler}
+                  value={editDetails.aadhar_number}
+                  placeholder="Enter Aadhar Number"
+                />
+              </div>
+            </div>
+          </div> */}
           <div className="row py-1">
             {error && <Alert variant="danger">{error}</Alert>}
           </div>

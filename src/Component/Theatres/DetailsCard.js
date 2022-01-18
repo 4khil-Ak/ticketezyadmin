@@ -2,7 +2,7 @@ import Axios from "axios";
 import SwitchComponent from "../../UI/Switch";
 import React, { useState, useEffect } from "react";
 import Loader from "../../UI/Loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const DetailsCard = (props) => {
   let id = null;
@@ -41,12 +41,12 @@ const DetailsCard = (props) => {
     }
   }, [])
   const onDeleteHandler = (details) => {
+    alert("Are you sure want to delete this theater");
     setLoading(true)
     let deleteId = details.secret;
-    const url = `https://apidev.ticketezy.com/theatres/${deleteId}/change-status`;
-    Axios.patch(url, {
-      status: "removed"
-    }, {
+    // if (props.details.status === "active") {
+    const url = `https://apidev.ticketezy.com/theatres/${deleteId}`;
+    Axios.delete(url, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -59,6 +59,10 @@ const DetailsCard = (props) => {
       setLoading(false)
       alert("OOPS an error occured !\n\nPlease try again later")
     })
+    // } else {
+    //   setLoading(false)
+    //   alert("Cannot delete inactive Theater")
+    // }
   }
   return (
     <>

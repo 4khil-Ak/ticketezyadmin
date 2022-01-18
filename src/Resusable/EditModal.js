@@ -96,7 +96,7 @@ const EditModal = (props) => {
               Close&ensp;&ensp;<i className="fa fa-close"></i>
             </div>
             <div className="d-flex align-items-center ml-auto p-2">
-              <h4 className="m-0">Title of the Events Goes Here</h4>
+              <h4 className="m-0">{editDetails.title}</h4>
             </div>
           </div>
           {/* <div

@@ -123,14 +123,14 @@ const ManagerEditModal = (props) => {
               Close&ensp;&ensp;<i className="fa fa-close"></i>
             </div>
             <div className="d-flex align-items-center ml-auto p-2">
-              <h4 className="m-0">Event Manager Name</h4>
+              <h4 className="m-0">{editDetails.name}</h4>
             </div>
           </div>
           <div className="row ">
             <p className="text-dark p-2 w-100">Manager Details</p>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="name">name</label>
+                <label htmlFor="name">name</label>
                 <input
                   className="m-0 px-2"
                   type="text"
@@ -143,7 +143,7 @@ const ManagerEditModal = (props) => {
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="companyname">Company Name</label>
+                <label htmlFor="companyname">Company Name</label>
                 <input
                   className="m-0 px-2"
                   type="text"
@@ -156,7 +156,7 @@ const ManagerEditModal = (props) => {
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                   className="m-0 px-2"
                   type="email"
@@ -169,7 +169,7 @@ const ManagerEditModal = (props) => {
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column">
-                <label htmlfor="number">Mobile Number</label>
+                <label htmlFor="number">Mobile Number</label>
                 <input
                   className="m-0 px-2"
                   type="number"
@@ -185,7 +185,7 @@ const ManagerEditModal = (props) => {
             <p className="text-dark p-2 w-100">Bank Details</p>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="account">Account Number</label>
+                <label htmlFor="account">Account Number</label>
                 <input
                   className="m-0 px-2"
                   type="text"
@@ -198,7 +198,7 @@ const ManagerEditModal = (props) => {
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="ifsc">IFSC</label>
+                <label htmlFor="ifsc">IFSC</label>
                 <input
                   className="m-0 px-2"
                   type="text"
@@ -211,7 +211,7 @@ const ManagerEditModal = (props) => {
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="branch">Branch Name</label>
+                <label htmlFor="branch">Branch Name</label>
                 <input
                   className="m-0 px-2"
                   type="text"
@@ -224,7 +224,7 @@ const ManagerEditModal = (props) => {
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column">
-                <label htmlfor="bank">Bank Name</label>
+                <label htmlFor="bank">Bank Name</label>
                 <input
                   className="m-0 px-2"
                   type="text"
@@ -240,7 +240,7 @@ const ManagerEditModal = (props) => {
             <p className="text-dark p-2 w-100">Personal Details</p>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column ">
-                <label htmlfor="pan">Pan Number</label>
+                <label htmlFor="pan">Pan Number</label>
                 <input
                   className="m-0 px-2"
                   type="text"
@@ -253,7 +253,7 @@ const ManagerEditModal = (props) => {
             </div>
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column">
-                <label htmlfor="aadhar">Aadhar</label>
+                <label htmlFor="aadhar">Aadhar</label>
                 <input
                   className="m-0 px-2"
                   type="text"

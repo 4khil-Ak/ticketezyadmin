@@ -13,6 +13,7 @@ import Loader from "../UI/Loader";
 const AddEvent = () => {
   let navigate = useNavigate();
   const [crew, setCrew] = useState([]);
+  const [cat,setCat] = useState([]);
   const [image, setImage] = useState(null);
   const [managerDetails, setManagerDetails] = useState([]);
   const [error, setError] = useState(false);
@@ -37,7 +38,7 @@ const AddEvent = () => {
     venue: "",
     location: "",
     language: "",
-    categories: [],
+    categories: "",
     duration: 0,
     adult_content: false,
     cast_and_crew: []
@@ -175,7 +176,6 @@ const AddEvent = () => {
       return [...prevState]
     })
   }
-  console.log(eventInputs);
 
   return (
     <>

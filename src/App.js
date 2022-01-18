@@ -10,6 +10,7 @@ import EventsManager from "./Pages/EventsManager";
 import Events from "./Pages/Events";
 import AddEvent from "./Pages/AddEvent";
 import AddManager from "./Pages/AddManager";
+import AddTheatre from "./Component/Theatres/AddTheatre";
 import AddPriceCard from "./Component/Events/AddPriceCard";
 import AddEventSchedule from "./Component/Events/AddEventSchedule";
 import EventDetails from "./Pages/EventDetails";
@@ -101,6 +102,7 @@ export default function App() {
           </Route>
           <Route path="addevent" element={<AddEvent />}></Route>
           <Route path="events" element={<Events />}></Route>
+          <Route path="addtheatre" element={<AddTheatre />}></Route>
           <Route path="theaters" element={<Theatres />}></Route>
           <Route index element={<Movies />}></Route>
         </Route>
