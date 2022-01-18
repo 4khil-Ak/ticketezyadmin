@@ -92,7 +92,7 @@ const EventDetails = (props) => {
                         </div>
                     </div>
                     <h6 className="py-2 mb-1 text-primary">Seat Layout & Price Card</h6>
-                    <div className="row mb-3">
+                    <div className="row mb-3 px-3">
                         <SeatLayout data={data.secret} />
                     </div>
                     <h6 className="py-2 mb-1 text-primary">Event Schedule</h6>

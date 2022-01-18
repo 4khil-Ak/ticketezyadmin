@@ -1,4 +1,5 @@
 export const CategoryOptions = [
+  { value: 'workshop', label: 'Workshop' },
   { value: 'drama', label: 'Drama' },
   { value: 'action', label: 'Action' },
   { value: 'romance', label: 'Romance' },
