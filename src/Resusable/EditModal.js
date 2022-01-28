@@ -1,16 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { LanguageOptions } from "../Helpers/LanguageOptions";
 import { CategoryOptions } from "../Helpers/CategoryOptions";
 import { AdultOptions } from "../Helpers/AdultOptions";
 import Axios from "axios";
+import { Alert } from "react-bootstrap";
 
 const EditModal = (props) => {
+  let tempArr = [];
+  const [crew, setCrew] = useState([]);
   // const url = `https://apidev.ticketezy.com/events_list/${props.eventDetails.secret}`
-  const url = `https://apidev.ticketezy.com/events/${props.eventDetails.secret}`
-  const [loading, setLoading] = useState(false)
+  const url = `https://apidev.ticketezy.com/events/${props.eventDetails.secret}`;
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [image, setImage] = useState(null);
+  const [cat, setCat] = useState([]);
+  const [lang, setLang] = useState(LanguageOptions.filter(x => x.value === props.eventDetails.language));
+  const [adult, setAdult] = useState(AdultOptions.filter(x => x.value === props.eventDetails.adult_content));
+  var newArr = [];
+  for (var i = 0; i < props.eventDetails.categories.length; i++) {
+    newArr.push(
+      ...CategoryOptions.filter(
+        (x) => x.value === props.eventDetails.categories[i]
+      )
+    );
+  }
+  useEffect(() => {
+    setCat(newArr);
+  }, []);
   const [editDetails, setEditDetails] = useState({
     title: props.eventDetails.title,
     description: props.eventDetails.description,
@@ -20,7 +37,7 @@ const EditModal = (props) => {
     categories: props.eventDetails.categories,
     duration: props.eventDetails.duration,
     adult_content: props.eventDetails.adult_content,
-  })
+  });
   const onChangeHandler = (event, action) => {
     const tempEditDetails = JSON.parse(JSON.stringify(editDetails));
     if (event.target) {
@@ -28,7 +45,7 @@ const EditModal = (props) => {
     } else if (action) {
       tempEditDetails[action.id] = event.value;
     }
-    setEditDetails(tempEditDetails)
+    setEditDetails(tempEditDetails);
   };
 
   const onImageChange = (event) => {
@@ -37,8 +54,14 @@ const EditModal = (props) => {
     }
   };
   const updateHandler = () => {
+    for (var i = 0; i < cat.length; i++) {
+      tempArr.push(cat[i].value);
+    }
+    editDetails.categories = [];
+    editDetails.categories.push(...tempArr);
+    editDetails.language = lang.value;
+    editDetails.adult_content = adult.value;
     const tempEditDetails = JSON.parse(JSON.stringify(editDetails));
-    // tempEventInputs["time"] = new Date().toISOString();
     if (
       editDetails.title === "" ||
       editDetails.description === "" ||
@@ -53,24 +76,25 @@ const EditModal = (props) => {
       setError("Enter valid data !");
     } else if (editDetails.description.length < 10) {
       setError("Description is too short");
+    } else if (cat.length === 0) {
+      setError("Categories cannot be empty");
     } else {
       setLoading(true);
-      Axios
-        .patch(
-          url,
-          {
-            event: tempEditDetails,
+      Axios.patch(
+        url,
+        {
+          event: tempEditDetails,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
-          {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        )
+        }
+      )
         .then((resp) => {
           setLoading(false);
-          alert("Upadted Successfully")
+          alert("Upadted Successfully");
           window.location.reload();
         })
         .catch((error) => {
@@ -78,6 +102,17 @@ const EditModal = (props) => {
           alert("A network error occured/nTry again later");
         });
     }
+  };
+  const addMember = () => {
+    // create an array
+    let addData = {
+      id: crew.length,
+      name: "",
+      image: null,
+    };
+    setCrew((prevState) => {
+      return [...prevState, addData];
+    });
   };
   return (
     <>
@@ -89,7 +124,7 @@ const EditModal = (props) => {
               className="d-flex back align-items-center px-3 py-1"
               style={{
                 borderRadius: "5px",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
               onClick={props.onCloseHandler}
             >
@@ -120,10 +155,14 @@ const EditModal = (props) => {
             />
           </div> */}
           <div className="row">
+            <div className="col-12">
+              {error && <Alert variant="danger">{error}</Alert>}
+            </div>
             <div className="col-md-6 p-2">
               <div className="d-flex flex-column mb-3">
                 <label htmlFor="title">Title</label>
-                <input type="text"
+                <input
+                  type="text"
                   id="title"
                   value={editDetails.title}
                   onChange={onChangeHandler}
@@ -131,7 +170,8 @@ const EditModal = (props) => {
               </div>
               <div className="d-flex flex-column">
                 <label htmlFor="venue">Venue</label>
-                <input type="text"
+                <input
+                  type="text"
                   id="venue"
                   value={editDetails.venue}
                   onChange={onChangeHandler}
@@ -146,7 +186,7 @@ const EditModal = (props) => {
                   style={{
                     height: "inherit",
                     resize: "none",
-                    overflow: "auto"
+                    overflow: "auto",
                   }}
                   value={editDetails.description}
                   onChange={onChangeHandler}
@@ -158,7 +198,8 @@ const EditModal = (props) => {
             <div className="col-md-5 p-2" style={{ height: "inherit" }}>
               <div className="d-flex flex-column" style={{ height: "100%" }}>
                 <label htmlFor="location">Location</label>
-                <input type="text"
+                <input
+                  type="text"
                   id="location"
                   value={editDetails.location}
                   onChange={onChangeHandler}
@@ -185,12 +226,11 @@ const EditModal = (props) => {
               <div className="d-flex flex-column">
                 <label htmlFor="categories">Category</label>
                 <Select
+                  isMulti
                   options={CategoryOptions}
                   id="categories"
-                  value={CategoryOptions.filter(function (option) {
-                    return option.value === editDetails.categories.slice(2,length-3);
-                  })}
-                  onChange={onChangeHandler}
+                  value={cat}
+                  onChange={setCat}
                 />
               </div>
             </div>
@@ -200,10 +240,8 @@ const EditModal = (props) => {
                 <Select
                   options={LanguageOptions}
                   id="language"
-                  value={LanguageOptions.filter(function (option) {
-                    return option.value === editDetails.language;
-                  })}
-                  onChange={onChangeHandler}
+                  value={lang}
+                  onChange={setLang}
                 />
               </div>
             </div>
@@ -213,27 +251,37 @@ const EditModal = (props) => {
                 <Select
                   options={AdultOptions}
                   id="adult_content"
-                  value={AdultOptions.filter(function (option) {
-                    return option.value === editDetails.adult_content;
-                  })}
-                  onChange={onChangeHandler}
+                  value={adult}
+                  onChange={setAdult}
                 />
               </div>
             </div>
           </div>
           {/* <div className="row">
             <label className="w-100 mb-2">Event Speakers</label>
+            <i
+              className="fas fa-plus text-success cursor-pointer mx-2 my-1"
+              onClick={addMember}
+            ></i>
             <div className="row w-100">
               <div className="col-sm-3 col-lg-2 p-1">
-                // <input className="w-100 px-2" type="text" value="Akhil" />
+                <input className="w-100 px-2" type="text" value="Akhil" />
               </div>
             </div>
           </div> */}
           <div className="row justify-content-end pt-3">
-            <button className="btn btn-primary mr-2" type="submit" onClick={updateHandler}>
+            <button
+              className="btn btn-primary mr-2"
+              type="submit"
+              onClick={updateHandler}
+            >
               Save
             </button>
-            <button className="btn btn-primary" type="submit" onClick={props.onCloseHandler}>
+            <button
+              className="btn btn-primary"
+              type="submit"
+              onClick={props.onCloseHandler}
+            >
               Cancel
             </button>
           </div>

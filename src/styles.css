@@ -406,3 +406,7 @@ a.add-seat {
   background: var(--primary);
   text-decoration: none !important;
 }
+
+p.pt-0 > span:last-child span:last-child {
+  display: none;
+}

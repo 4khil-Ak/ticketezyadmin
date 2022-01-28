@@ -11,9 +11,10 @@ import Axios from "axios";
 import Loader from "../UI/Loader";
 
 const AddEvent = () => {
+  let tempArr = [];
   let navigate = useNavigate();
   const [crew, setCrew] = useState([]);
-  const [cat,setCat] = useState([]);
+  const [cat, setCat] = useState([]);
   const [image, setImage] = useState(null);
   const [managerDetails, setManagerDetails] = useState([]);
   const [error, setError] = useState(false);
@@ -21,16 +22,16 @@ const AddEvent = () => {
   useEffect(() => {
     Axios.get("https://apidev.ticketezy.com/event_managers", {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    }).then(res => {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
       setLoading(false);
       setManagerDetails(res.data);
-    })
-  }, [])
+    });
+  }, []);
   const [managerId, setManagerId] = useState({
-    managerid: ""
+    managerid: "",
   });
   const [eventInputs, setEventInputs] = useState({
     title: "",
@@ -38,16 +39,16 @@ const AddEvent = () => {
     venue: "",
     location: "",
     language: "",
-    categories: "",
+    categories: [],
     duration: 0,
     adult_content: false,
-    cast_and_crew: []
+    cast_and_crew: [],
   });
   var EventsManager = managerDetails.map(function (mopt) {
     var info = {
-      "value": mopt.secret,
-      "label": mopt.name
-    }
+      value: mopt.secret,
+      label: mopt.name,
+    };
     return info;
   });
 
@@ -71,7 +72,7 @@ const AddEvent = () => {
   } else {
     Image = (
       <>
-        <small>Upload a imgae to continue</small>
+        <small>Upload a image to continue</small>
       </>
     );
   }
@@ -98,6 +99,11 @@ const AddEvent = () => {
 
   const url = `${serviceUrl}event_managers/${managerId.managerid}/events`;
   const handleSubmit = () => {
+    for ( var i = 0; i < cat.length; i++) {
+      tempArr.push(cat[i].value);
+    }
+    eventInputs.categories = [];
+    eventInputs.categories.push(...tempArr);
     eventInputs.cast_and_crew = [];
     eventInputs.cast_and_crew.push(...crew);
     const tempEventInputs = JSON.parse(JSON.stringify(eventInputs));
@@ -116,6 +122,10 @@ const AddEvent = () => {
       setError("Enter valid data !");
     } else if (eventInputs.description.length < 10) {
       setError("Description is too short");
+    } else if (cat.length === 0) {
+      setError("Categories cannot be empty");
+    } else if (crew.length === 0) {
+      setError("Crew cannot be empty");
     } else {
       setLoading(true);
       axiosInstance
@@ -137,45 +147,44 @@ const AddEvent = () => {
         })
         .catch((error) => {
           setLoading(false);
-          setError(error.message);
+          setError("Invalid Data");
         });
     }
   };
 
   const handleCancel = () => {
     navigate("/events");
-  }
+  };
 
   const addMember = () => {
     // create an array
     let addData = {
       id: crew.length,
       name: "",
-      image: null
-    }
+      image: null,
+    };
     setCrew((prevState) => {
-      return [...prevState, addData]
-    })
+      return [...prevState, addData];
+    });
   };
-
   const onChangeHandler = (e, data) => {
     setCrew((prevState) => {
       let updatedData = null;
       if (e.target.name === "img") {
         updatedData = {
           ...data,
-          img: e.target.files[0]
-        }
+          img: e.target.files[0],
+        };
       } else {
         updatedData = {
           ...data,
-          name: e.target.value
-        }
+          name: e.target.value,
+        };
       }
       prevState[data.id] = updatedData;
-      return [...prevState]
-    })
-  }
+      return [...prevState];
+    });
+  };
 
   return (
     <>
@@ -260,7 +269,7 @@ const AddEvent = () => {
               </div>
               <div className="col-md-3 p-2">
                 <div className="d-flex flex-column">
-                  <label htmlFor="duration">Duration</label>
+                  <label htmlFor="duration">Duration&ensp;<small>(In Minutes)</small></label>
                   <input
                     type="number"
                     id="duration"
@@ -292,13 +301,12 @@ const AddEvent = () => {
                 <div className="d-flex flex-column">
                   <label htmlFor="categories">Category</label>
                   <Select
+                    isMulti
                     options={CategoryOptions}
                     id="categories"
                     name="categories"
-                    value={CategoryOptions.filter(function (option) {
-                      return option.value === eventInputs.categories;
-                    })}
-                    onChange={handleChange}
+                    value={cat}
+                    onChange={setCat}
                   />
                 </div>
               </div>
@@ -319,7 +327,8 @@ const AddEvent = () => {
               <div className="col-md-4 p-2">
                 <div className="d-flex flex-column">
                   <label>Event Manager</label>
-                  <Select options={EventsManager}
+                  <Select
+                    options={EventsManager}
                     id="managerid"
                     name="managerid"
                     value={EventsManager.filter(function (option) {
@@ -347,9 +356,18 @@ const AddEvent = () => {
           </div>
           <div className="row p-2">
             <label className="mb-2">Event Speakers</label>
-            <i className="fas fa-plus text-success cursor-pointer mx-2 my-1" onClick={addMember}></i>
+            <i
+              className="fas fa-plus text-success cursor-pointer mx-2 my-1"
+              onClick={addMember}
+            ></i>
             <div className="row w-100">
-              {crew.map((data) => <AddCrew key={data.id} data={data} onChangeHandler={onChangeHandler} />)}
+              {crew.map((data) => (
+                <AddCrew
+                  key={data.id}
+                  data={data}
+                  onChangeHandler={onChangeHandler}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -361,7 +379,11 @@ const AddEvent = () => {
           >
             Save
           </button>
-          <button className="btn btn-primary px-3" type="submit" onClick={handleCancel}>
+          <button
+            className="btn btn-primary px-3"
+            type="submit"
+            onClick={handleCancel}
+          >
             Cancel
           </button>
         </div>

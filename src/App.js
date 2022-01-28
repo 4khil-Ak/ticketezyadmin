@@ -16,6 +16,7 @@ import AddEventSchedule from "./Component/Events/AddEventSchedule";
 import EventDetails from "./Pages/EventDetails";
 import ManagerDetails from "./Pages/ManagerDetails";
 import TheaterDetails from "./Component/Theatres/TheaterDetails";
+import AddScreen from "./Component/Theatres/AddScreen";
 
 export default function App() {
   const url = "https://apidev.ticketezy.com/super_admins/login";
@@ -96,13 +97,14 @@ export default function App() {
             <Route path=":id" element={<ManagerDetails />}></Route>
           </Route>
           <Route path="eventsmanager" element={<EventsManager />}></Route>
-          <Route path="/events/:id/event_schedules" element={<AddEventSchedule />}></Route>
-          <Route path="/events/:id/event_seats" element={<AddPriceCard />}></Route>
+          <Route path="events/:id/event_schedules" element={<AddEventSchedule />}></Route>
+          <Route path="events/:id/event_seats" element={<AddPriceCard />}></Route>
           <Route path="eventdetails">
             <Route path=":id" element={<EventDetails />}></Route>
           </Route>
           <Route path="addevent" element={<AddEvent />}></Route>
           <Route path="events" element={<Events />}></Route>
+          <Route path="theaterdetails/:id/screens" element={<AddScreen />}></Route>
           <Route path="theaterdetails">
             <Route path=":id" element={<TheaterDetails />}></Route>
           </Route>

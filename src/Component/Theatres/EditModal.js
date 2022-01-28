@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import Select from "react-select";
-import SelectComponent from "../../UI/Select";
 import { TheaterType } from "../../Helpers/TheaterType";
 import Loader from "../../UI/Loader";
 import { Alert } from "react-bootstrap";
@@ -10,6 +9,7 @@ const EditModal = (props) => {
   const url = `https://apidev.ticketezy.com/theatres/${props.theatreDetails.secret}/update`
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false);
+  const [type, setType] = useState(TheaterType.filter(x => x.value === props.theatreDetails.theatre_type));
   const [editDetails, setEditDetails] = useState({
     name: props.theatreDetails.name,
     owner: props.theatreDetails.owner,
@@ -33,6 +33,8 @@ const EditModal = (props) => {
     setEditDetails(tempEditDetails)
   };
   const updateHandler = () => {
+    editDetails.theatre_type = type.value;
+    const tempEditDetails = JSON.parse(JSON.stringify(editDetails));
     if (
       editDetails.name === "" ||
       editDetails.owner === "" ||
@@ -55,7 +57,7 @@ const EditModal = (props) => {
       Axios.patch(
         url,
         {
-          theatre: editDetails
+          theatre: tempEditDetails
         },
         {
           headers: {
@@ -190,13 +192,13 @@ const EditModal = (props) => {
             <div className="col-md-6 p-2">
               <div className="d-flex w-100 flex-column">
                 <label htmlFor="type">Theater Type</label>
-                <SelectComponent
+                <Select
                   options={TheaterType}
                   // className="m-0 px-2"
                   id="theatre_type"
                   name="theatre_type"
-                  value={editDetails.theatre_type}
-                  onChangeHandler={onChangeHandler}
+                  value={type}
+                  onChange={setType}
                 />
               </div>
             </div>

@@ -30,7 +30,7 @@ const DetailsCard = (props) => {
       window.location.reload();
     }).catch((error) => {
       setLoading(false)
-      alert(error.message);
+      alert("Network Error !\nTry again");
     })
   };
   useEffect(() => {

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 const AddCrew = (props) => {
-    useEffect(() => {
-        console.log("data", props.data);
-    }, [])
     const [image, setImage] = useState(null);
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {

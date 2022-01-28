@@ -48,11 +48,11 @@ const Events = () => {
   };
 
   let ui = null;
-  if (events === null) {
+  if (events !== null && events.length === 0) {
     ui = <>
       <div className="w-100 text-center">
-        <img className="no-data w-50 p-5" src="/images/nodata.gif" alt="nodata" />
-        <h4 className="text-primary">OOPS ! No Data to Display</h4>
+        <img className="no-data w-25 p-2" src="/images/nodata.gif" alt="nodata" />
+        <h4 className="text-primary mt-3">Add Events to view some</h4>
       </div>
     </>
   } else {

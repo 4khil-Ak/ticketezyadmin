@@ -14,26 +14,32 @@ const Manager = (props) => {
     });
     setLoading(true);
     if (checked === true) {
-      id = "inactive"
+      id = "inactive";
     } else {
-      id = "active"
+      id = "active";
     }
-    Axios.patch(`https://apidev.ticketezy.com/event_managers/${props.manager.secret}`, {
-      event_manager: {
-        status: id
+    Axios.patch(
+      `https://apidev.ticketezy.com/event_managers/${props.manager.secret}`,
+      {
+        event_manager: {
+          status: id,
+        },
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       }
-    }, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    }).then((res) => {
-      setLoading(false)
-      window.location.reload();
-    }).catch((error) => {
-      setLoading(false)
-      alert("A Network error occured !\nPlease try again later");
-    })
+    )
+      .then((res) => {
+        setLoading(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        setLoading(false);
+        alert("A Network error occured !\nPlease try again later");
+      });
   };
   useEffect(() => {
     if (props.manager.status === "active") {
@@ -41,25 +47,29 @@ const Manager = (props) => {
     } else {
       setChecked(false);
     }
-  }, [])
+  }, []);
   const onDeleteHandler = (manager) => {
-    setLoading(true)
-    let deleteId = manager.secret;
-    const url = `https://apidev.ticketezy.com/event_managers/${deleteId}`;
-    Axios.delete(url, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      }
-    }).then((res) => {
-      setLoading(false);
-      alert("Manager has been deleted successfully");
-      window.location.reload();
-    }).catch((error) => {
-      setLoading(false)
-      alert("OOPS an error occured !\n\nPlease try again later")
-    })
-  }
+    if (confirm("Are you sure want to delete this Manager") == true) {
+      setLoading(true);
+      let deleteId = manager.secret;
+      const url = `https://apidev.ticketezy.com/event_managers/${deleteId}`;
+      Axios.delete(url, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          setLoading(false);
+          alert("Manager has been deleted successfully");
+          window.location.reload();
+        })
+        .catch((error) => {
+          setLoading(false);
+          alert("OOPS an error occured !\n\nPlease try again later");
+        });
+    }
+  };
   return (
     <>
       <div className="col-sm-6 col-md-3 px-3 py-2">
@@ -72,12 +82,19 @@ const Manager = (props) => {
             <p className="eventno">{props.manager.email}</p>
           </div>
           <div className="card-footer bg-transparent row py-2">
-            <Link className="footer-icon fas fa-eye text-primary" to={`/managerdetails/${props.manager.secret}`} key={props.manager.secret}></Link>
+            <Link
+              className="footer-icon fas fa-eye text-primary"
+              to={`/managerdetails/${props.manager.secret}`}
+              key={props.manager.secret}
+            ></Link>
             <i
               className="footer-icon fas fa-edit text-secondary"
               onClick={() => props.editModal(props.manager)}
             ></i>
-            <i className="footer-icon fa fa-trash ml-auto mr-0  text-danger" onClick={() => onDeleteHandler(props.manager)}></i>
+            <i
+              className="footer-icon fa fa-trash ml-auto mr-0  text-danger"
+              onClick={() => onDeleteHandler(props.manager)}
+            ></i>
           </div>
         </div>
       </div>
