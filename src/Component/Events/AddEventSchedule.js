@@ -56,7 +56,18 @@ const AddEventSchedule = () => {
       return [...prevState];
     });
   };
-  function tConvert(time) {
+  function tConvert(time, date) {
+    var splitDate = date.split("-");
+    if (splitDate.count == 0) {
+      return null;
+    }
+
+    var year = splitDate[0];
+    var month = splitDate[1];
+    var day = splitDate[2];
+
+    let updatedDate = month + "\\" + day + "\\" + year;
+    console.log(updatedDate)
     // Check correct time format and split into components
     time = time
       .toString()
@@ -71,7 +82,7 @@ const AddEventSchedule = () => {
     // return time.join (''); // return adjusted time or original string
     let instance = "2/11/1998, " + time.join("");
     const d = new Date(instance);
-    return d.getTime();
+    return d.getTime()/1000;
   }
   const handleSubmit = () => {
     let time = [];
@@ -79,34 +90,34 @@ const AddEventSchedule = () => {
       let value = {
         date: data.date,
         times: data.times.map((value) => {
-          return tConvert(value.time);
+          return tConvert(value.time, data.date);
         }),
       };
       time.push(value);
     });
     setLoading(true);
-    Axios.post(
-      url,
-      {
-        event_schedule: {
-          schedules: time,
-        },
-      },
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => {
-        setLoading(false);
-        navigate(`/eventdetails/${params.id}`);
-      })
-      .catch((error) => {
-        setLoading(false);
-        alert("Network Error");
-      });
+    // Axios.post(
+    //   url,
+    //   {
+    //     event_schedule: {
+    //       schedules: time,
+    //     },
+    //   },
+    //   {
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // )
+    //   .then((res) => {
+    //     setLoading(false);
+    //     navigate(`/eventdetails/${params.id}`);
+    //   })
+    //   .catch((error) => {
+    //     setLoading(false);
+    //     alert("Network Error");
+    //   });
   };
   const handleCancel = () => {
     navigate(`/eventdetails/${params.id}`);
