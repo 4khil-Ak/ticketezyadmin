@@ -17,7 +17,7 @@ const EventSchedule = (props) => {
     }, [])
     
     const toDate = (time) => {
-        var d = new Date(time);
+        var d = new Date(time*1000);
         var value = d.toLocaleTimeString().replace(/(.*)\D\d+/, '$1');
         return value;
     }

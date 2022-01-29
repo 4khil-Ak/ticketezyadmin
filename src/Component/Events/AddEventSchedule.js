@@ -95,28 +95,28 @@ const AddEventSchedule = () => {
       time.push(value);
     });
     setLoading(true);
-    // Axios.post(
-    //   url,
-    //   {
-    //     event_schedule: {
-    //       schedules: time,
-    //     },
-    //   },
-    //   {
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //   }
-    // )
-    //   .then((res) => {
-    //     setLoading(false);
-    //     navigate(`/eventdetails/${params.id}`);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     alert("Network Error");
-    //   });
+    Axios.post(
+      url,
+      {
+        event_schedule: {
+          schedules: time,
+        },
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) => {
+        setLoading(false);
+        navigate(`/eventdetails/${params.id}`);
+      })
+      .catch((error) => {
+        setLoading(false);
+        alert("Network Error");
+      });
   };
   const handleCancel = () => {
     navigate(`/eventdetails/${params.id}`);
@@ -124,7 +124,7 @@ const AddEventSchedule = () => {
   return (
     <>
       <div className="details p-3" style={{ background: "#fff" }}>
-        <h3 className="text-dark p-2">Add Price Card !</h3>
+        <h3 className="text-dark p-2">Add Event Schedule !</h3>
         <div
           className="d-flex flex-column p-4"
           style={{ background: "var(--secondary)", borderRadius: "8px" }}
@@ -165,8 +165,8 @@ const AddEventSchedule = () => {
                   <i
                     className="fas fa-plus text-success cursor-pointer mx-2 my-1"
                     onClick={() => addTime(data.id)}
-                  ></i>
-                  <i className="ml-auto fa fa-trash text-danger cursor-pointer"></i>
+                  >&ensp;Add Show</i>
+                  {/* <i className="ml-auto fa fa-trash text-danger cursor-pointer"></i> */}
                 </div>
               );
             })}

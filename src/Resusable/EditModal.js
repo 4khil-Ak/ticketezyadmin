@@ -5,9 +5,11 @@ import { CategoryOptions } from "../Helpers/CategoryOptions";
 import { AdultOptions } from "../Helpers/AdultOptions";
 import Axios from "axios";
 import { Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const EditModal = (props) => {
   let tempArr = [];
+  let navigate = useNavigate();
   const [crew, setCrew] = useState([]);
   // const url = `https://apidev.ticketezy.com/events_list/${props.eventDetails.secret}`
   const url = `https://apidev.ticketezy.com/events/${props.eventDetails.secret}`;
@@ -95,7 +97,7 @@ const EditModal = (props) => {
         .then((resp) => {
           setLoading(false);
           alert("Upadted Successfully");
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((error) => {
           setLoading(false);

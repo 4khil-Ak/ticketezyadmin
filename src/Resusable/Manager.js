@@ -34,7 +34,7 @@ const Manager = (props) => {
     )
       .then((res) => {
         setLoading(false);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => {
         setLoading(false);
@@ -62,7 +62,7 @@ const Manager = (props) => {
         .then((res) => {
           setLoading(false);
           alert("Manager has been deleted successfully");
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((error) => {
           setLoading(false);

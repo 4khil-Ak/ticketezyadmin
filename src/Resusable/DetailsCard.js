@@ -19,7 +19,7 @@ const DetailsCard = (props) => {
         .then((res) => {
           setLoading(false);
           alert("Event has been  deleted successfully");
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((error) => {
           setLoading(false);

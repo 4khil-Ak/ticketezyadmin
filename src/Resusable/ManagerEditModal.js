@@ -96,7 +96,7 @@ const ManagerEditModal = (props) => {
       ).then((res) => {
         setLoading(false);
         alert("Upadted Successfully")
-        window.location.reload();
+        // window.location.reload();
       }).catch((error) => {
         setLoading(false);
         if (error.response.data.errors.email !== null && error.response.data.errors.email) {
