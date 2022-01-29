@@ -81,7 +81,8 @@ const AddEventSchedule = () => {
     // return time.join (''); // return adjusted time or original string
     let instance = "2/11/1998, " + time.join("");
     const d = new Date(instance);
-    return d.getTime()/1000;
+    const ak = d.getTime()/1000;
+    return ak.toString();
   }
   const handleSubmit = () => {
     let time = [];
