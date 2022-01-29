@@ -67,7 +67,6 @@ const AddEventSchedule = () => {
     var day = splitDate[2];
 
     let updatedDate = month + "\\" + day + "\\" + year;
-    console.log(updatedDate)
     // Check correct time format and split into components
     time = time
       .toString()
